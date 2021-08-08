@@ -1,0 +1,23 @@
+{
+  "name": "e-sign-api",
+  "version": "1.0.0",
+  "description": "A simple to use controller for the E-Sign API",
+  "main": "index.js",
+  "scripts": {
+    "test": "e-sign test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Isaac-hughes/e-sign-api.git"
+  },
+  "keywords": [
+    "E-signature",
+    "E-Sign"
+  ],
+  "author": "Isaac Hughes (E-Sign)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Isaac-hughes/e-sign-api/issues"
+  },
+  "homepage": "https://github.com/Isaac-hughes/e-sign-api#readme"
+}
