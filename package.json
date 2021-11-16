@@ -12,12 +12,17 @@
   },
   "keywords": [
     "E-signature",
-    "E-Sign"
+    "E-Sign",
+    "Npm",
+    "Electronic Signature"
   ],
   "author": "Isaac Hughes (E-Sign)",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Isaac-hughes/e-sign-api/issues"
   },
-  "homepage": "https://github.com/Isaac-hughes/e-sign-api#readme"
+  "homepage": "https://github.com/Isaac-hughes/e-sign-api#readme",
+  "dependencies": {
+    "axios": "^0.24.0"
+  }
 }

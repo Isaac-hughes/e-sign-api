@@ -1,15 +1,133 @@
-// E-Sign API for enterprise customers of e-sign
+// This NPM package was created by Isaac Hughes
+// https://www.linkedin.com/in/isaac-hughes-software-developer/
+// Github Repo
+// https://github.com/Isaac-hughes/e-sign-api
 
+// E-Sign API for enterprise customers of e-sign
+"use strict";
+
+const { default: axios } = require("axios");
 
 // Roots for all calls
-const SANDBOX_ROOT_URL = "https://sandbox.e-sign.co.uk/v3/"
-const ROOT_URL = "https://api.e-sign.co.uk/v3/"
+const SANDBOX_ROOT_URL = "https://sandbox.e-sign.co.uk/v3/";
+const ROOT_URL = "https://api.e-sign.co.uk/v3/";
+
+// the environment can either be sandbox or live
+// defaults to sandbox
+let environment = SANDBOX_ROOT_URL;
+
+
+// Change environment function
+function changeEnvironment(){
+    if(environment == SANDBOX_ROOT_URL){
+        environment = ROOT_URL;
+    } else if (environment == ROOT_URL){
+        environment = SANDBOX_ROOT_URL;
+    } else {
+        // If this error is triggered the environment url has been cocked up
+        console.log('impossible case, environment has been edited and does not fit with a known variable, environment will be assigned to sandbox')
+        environment = SANDBOX_ROOT_URL
+    }
+}
+
+// Axios has been installed to facilitate the HTTP requests
+// This package is designed to run off constants rather than many functions
+// This makes the package more efficient, and much quicker to write...
+function makeRequest(method, path, headers, data){
+    axios({
+        method: method,
+        url: environment + path,
+        headers: headers,
+        data: data,
+        responseType: 'stream'
+      }).then(function(res){
+          return res
+      }).catch(function(error){
+          console.log(error)
+          return error
+      })
+}
+
+
+function esign(apiKey, call, data){
+
+    // how this function works
+    // Check all the parameters are valid
+    // Select the correct object 
+
+    if(call != undefined && call != null && call != ""){
+        // get the data for the call
+        let callData = getCallData(call)        
+
+
+
+    } else{
+        return {message: "Please pass an approprite endpoint as the call paramenter"}
+    }
+}
+
+// Assign the data fir the http call
+function getCallData(call){
+
+    let returnData;
+
+    switch (call) {
+
+        // Accounts
+        case 'createAccount':
+            returnData = createAccount;
+            break;
+        case 'retrieveAccount':
+            returnData = retrieveAccount;
+            break;
+        case 'updateAccount':
+            returnData = updateAccount;
+            break;
+        case 'deleteAccount':
+            returnData = deleteAccount;
+            break;
+        case 'getAccountAllUsers':
+            returnData = getAccountAllUsers;
+            break;
+        case 'getAccountStats':
+            returnData = getAccountStats;
+            break;
+        case 'getRecentEvents':
+            returnData = getRecentEvents;
+            break;
+        case 'getExtensionsList':
+            returnData = getExtensionsList;
+            break;
+        case 'enableExtension':
+            returnData = enableExtension;
+            break;
+        case 'disableExtension':
+            returnData = disableExtension;
+            break;
+
+
+            // Envelopes
+        case 'createEnvelope':
+            returnData = createEnvelope;
+            break;
+        
+
+            // Default
+        default:
+            return "undefined";
+      }
+
+}
 
 // ==============
 // == Accounts ==
 // ==============
 
 // POST Create Account 'accounts'
+createAccount = {
+    method : "POST",
+    path : "accounts"
+}
 // GET Retrive Account 'accounts'
 // PATCH Update Account 'accounts'
 // DELETE Delete Account 'accounts'
