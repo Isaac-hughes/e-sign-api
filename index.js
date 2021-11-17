@@ -33,19 +33,41 @@ function changeEnvironment(){
 // Axios has been installed to facilitate the HTTP requests
 // This package is designed to run off constants rather than many functions
 // This makes the package more efficient, and much quicker to write...
-function makeRequest(method, path, headers, data){
-    axios({
-        method: method,
-        url: environment + path,
-        headers: headers,
-        data: data,
-        responseType: 'stream'
-      }).then(function(res){
-          return res
-      }).catch(function(error){
-          console.log(error)
-          return error
-      })
+function makeRequest(method, path, headers, data, parameters){
+
+    // Two seprate calls depending on if parameters are defined
+    if(parameters != undefined){
+        // Function construsts the path from the path and the path parameters
+        let pathAndParameters = getPath(path, parameters)
+
+        // Axios http call
+        axios({
+            method: method,
+            url: environment + pathAndParameters,
+            headers: headers,
+            data: data,
+            responseType: 'stream'
+          }).then(function(res){
+              return res
+          }).catch(function(error){
+              console.log(error)
+              return error
+          })
+    } else {
+        // Axios http call
+        axios({
+            method: method,
+            url: environment + path,
+            headers: headers,
+            data: data,
+            responseType: 'stream'
+          }).then(function(res){
+              return res
+          }).catch(function(error){
+              console.log(error)
+              return error
+          })
+    }
 }
 
 
@@ -57,13 +79,26 @@ function esign(apiKey, call, data){
 
     if(call != undefined && call != null && call != ""){
         // get the data for the call
-        let callData = getCallData(call)        
+        let callData = getCallData(call); 
+        let method = callData.method;
+        let path = callData.path;
+        let headers = {'Authorization': `Token ${apiKey}`};
 
+        // Makes two differernt calls depending on whether parameters or needed
+        if(callData.parameters){
+            let parameters = data.parameters;
 
+        } else{
+            makeRequest(method, path, headers, data);
+        }
 
     } else{
         return {message: "Please pass an approprite endpoint as the call paramenter"}
     }
+}
+
+function getPath(path, paramenters){
+
 }
 
 // Assign the data fir the http call
@@ -86,7 +121,7 @@ function getCallData(call){
         case 'deleteAccount':
             returnData = deleteAccount;
             break;
-        case 'getAccountAllUsers':
+        case 'getAccountWithAllUsers':
             returnData = getAccountAllUsers;
             break;
         case 'getAccountStats':
@@ -117,6 +152,8 @@ function getCallData(call){
             return "undefined";
       }
 
+      return returnData;
+
 }
 
 // ==============
@@ -126,16 +163,45 @@ function getCallData(call){
 // POST Create Account 'accounts'
 createAccount = {
     method : "POST",
-    path : "accounts"
+    path : "accounts",
+    parameters: false
 }
 // GET Retrive Account 'accounts'
+retriveAccount = {
+    method : "GET",
+    path : "accounts",
+    parameters: false
+}
 // PATCH Update Account 'accounts'
+updateAccount = {
+    method : "UPDATE",
+    path : "accounts",
+    parameters: false
+}
 // DELETE Delete Account 'accounts'
+deleteAccount = {
+    method : "DELETE",
+    path : "accounts",
+    parameters: false
+}
 // GET Account With All Users 'accounts/includes/user'
+getAccountWithAllUsers = {
+    method: "GET",
+    path: "accounts/includes/user",
+    parameters: false
+}
 // GET Account Stats 'accounts/{id}/stats'
+getAccountStats = {
+    method : "GET",
+    path : "accounts",
+    parameters: true
+}
 // GET Recent events 'accounts/'{id}/events'
+
 // GET List Extensions'accounts/{id}extensions'
+
 // PATCH Enable Extension 'accounts/{id}/extensions'
+
 // DELETE Disable extension 'accounts/{id}/extensions'
 
 // ===============
