@@ -71,34 +71,35 @@ function makeRequest(method, path, headers, data, parameters){
 }
 
 
-function esign(apiKey, call, data){
+export function esign(apiKey, call, data){
 
     // how this function works
     // Check all the parameters are valid
     // Select the correct object 
+console.log('e-sign called')
+    // if(call != undefined && call != null && call != ""){
+    //     // get the data for the call
+    //     let callData = getCallData(call); 
+    //     let method = callData.method;
+    //     let path = callData.path;
+    //     let headers = {'Authorization': `Token ${apiKey}`};
 
-    if(call != undefined && call != null && call != ""){
-        // get the data for the call
-        let callData = getCallData(call); 
-        let method = callData.method;
-        let path = callData.path;
-        let headers = {'Authorization': `Token ${apiKey}`};
+    //     // Makes two differernt calls depending on whether parameters or needed
+    //     if(callData.parameters){
+    //         let parameters = data.parameters;
 
-        // Makes two differernt calls depending on whether parameters or needed
-        if(callData.parameters){
-            let parameters = data.parameters;
+    //     } else{
+    //         makeRequest(method, path, headers, data);
+    //     }
 
-        } else{
-            makeRequest(method, path, headers, data);
-        }
-
-    } else{
-        return {message: "Please pass an approprite endpoint as the call paramenter"}
-    }
+    // } else{
+    //     return {message: "Please pass an approprite endpoint as the call paramenter"}
+    // }
 }
 
+// This function takes the path and parameters and returns the completed path for the request
 function getPath(path, paramenters){
-
+    
 }
 
 // Assign the data fir the http call
