@@ -1,3 +1,4 @@
+<pre>
 # This is the npm package for the E-Sign API
 
 Created By Isaac Hughes
@@ -19,6 +20,7 @@ eSignNPM('apikey', 'call', data, true)
 If the route takes parameters, these should be passed as part of the data object in the form
 If the call takes a json body, this too should be passed in the data object
 
+```
 let data = {
     parameter : {
         id : "exampleID",
@@ -28,6 +30,7 @@ let data = {
         id: "objectID"
     }
 }
+```
 
 
 All the calls follow a logical naming convention
@@ -38,7 +41,7 @@ Please view the swagger to see what data should be passed with each call and the
 https://api.e-sign.co.uk/v3/index.html
 
 
-// Accounts
+## Accounts
 
 createAccount
 retrieveAccount
@@ -51,7 +54,7 @@ getExtensionsList
 enableExtension
 disableExtension
 
-// Envelopes
+## Envelopes
 
 createEnvelope
 retrieveEnvelope
@@ -70,7 +73,7 @@ getSignerEnvelope
 getAuditTrail
 getAttachments
 
-// OAuth
+## OAuth
 
 createOauthApp
 getOauthApps
@@ -81,7 +84,7 @@ retrieveAccessToken
 revokeAccessToken
 getTokenInfo
 
-// Payments
+## Payments
 
 addPaymentDetails
 deletePaymentDetails
@@ -94,12 +97,12 @@ paymentCharge
 getInvoices
 getInvoice
 
-// saml
+## saml
 
 ssoLogin
 ssoCallback
             
-// signers
+## signers
 
 createReminder
 getReminder
@@ -108,7 +111,7 @@ signDocument
 getSignerEnvelopeFromSigners
 updateSigner
 
-// Tags
+## Tags
 
 createTag
 getTags
@@ -116,7 +119,7 @@ updateTag
 deleteTag
 getResourcesByTagAndType
 
-// Templates
+## Templates
 
 createTemplate
 getTemplates
@@ -125,7 +128,7 @@ updateTemplate
 retrieveTemplate
 deleteTemplate
 
-// uploads
+## uploads
 
 uploadFiles
 archiveFiles
@@ -133,7 +136,7 @@ getFilesByType
 getFileByID
 uploadCSVFile
 
-// Users
+## Users
 
 userLogin
 userLogout
@@ -157,8 +160,10 @@ resendToken
 confirmUser
 confirmInvite
 
-// webhooks
+## webhooks
 
 createWebhook
 getWebhooks
 deleteWebhook
+
+</pre>
