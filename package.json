@@ -1,6 +1,6 @@
 {
   "name": "e-sign-api",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "A simple to use controller for the E-Sign API",
   "main": "index.js",
   "scripts": {
