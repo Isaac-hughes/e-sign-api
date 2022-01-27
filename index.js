@@ -1,1 +1,1 @@
-module.exports = require('./lib/esign');
+module.exports = require('./dist');

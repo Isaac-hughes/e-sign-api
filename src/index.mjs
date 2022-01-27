@@ -6,7 +6,7 @@
 // E-Sign API for enterprise customers of e-sign
 "use strict";
 
-const { default: axios } = require("axios");
+import axios from 'axios'
 
 // Roots for all calls
 const SANDBOX_ROOT_URL = "https://sandbox.e-sign.co.uk/v3/";
@@ -15,6 +15,7 @@ const ROOT_URL = "https://api.e-sign.co.uk/v3/";
 // the environment can either be sandbox or live
 // defaults to sandbox
 let environment = SANDBOX_ROOT_URL;
+
 
 
 // Axios has been installed to facilitate the HTTP requests
@@ -114,7 +115,7 @@ let makeRequest = (method, path, headers, data, parameters) => {
 
 
 // This function is the gateway to all functions
-let esign =  async (apiKey, call, data, sandbox) => {
+export let esign =  async (apiKey, call, data, sandbox) => {
 
     // set the environment based on a boolean balue for sandbox
     if(sandbox){
@@ -596,6 +597,12 @@ let restoreEnvelope = {
     path : "envelopes",
     parameters: false
 }
+// PATCH Redirect to web add
+let redirectToWebApp = {
+    method : "POST",
+    path : "envelopes/redirect",
+    parameters: false
+}
 // GET Retrive signed envelopes 'envelopes/signed'
 let getSignedEnvelopes = {
     method : "GET",
@@ -868,6 +875,12 @@ let deleteTag = {
     parameters: true
 }
 
+let getResourcesByTagAndType = {
+    method : "GET",
+    path : "tags/{id}/{resource_type}",
+    parameters: true
+}
+
 // ===============
 // == Templates ==
 // ===============
@@ -1097,5 +1110,3 @@ let deleteWebhook = {
     path : "webhooks/{id}",
     parameters: true
 }
-
-module.exports = esign
