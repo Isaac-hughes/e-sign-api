@@ -8,7 +8,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.esign = void 0;
+exports.ESign = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -18,139 +18,156 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
-// Roots for all calls
-var SANDBOX_ROOT_URL = "https://sandbox.e-sign.co.uk/v3/";
-var ROOT_URL = "https://api.e-sign.co.uk/v3/"; // the environment can either be sandbox or live
-// defaults to sandbox
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-var environment = SANDBOX_ROOT_URL; // Axios has been installed to facilitate the HTTP requests
-// This package is designed to run off constants rather than many functions
-// This makes the package more efficient, and much quicker to write...
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-var makeRequest = function makeRequest(method, path, headers, data, parameters) {
-  // Two seprate calls depending on if parameters are defined
-  if (parameters != null) {
-    // Function construsts the path from the path and the path parameters
-    var pathAndParameters = getPath(path, parameters);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    if (data != null) {
-      // Axios http call
-      (0, _axios["default"])({
-        method: method,
-        url: environment + pathAndParameters,
-        headers: headers,
-        data: data,
-        responseType: 'json'
-      }).then(function (response) {
-        var responseObject = {
-          json: response.data,
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers
-        };
-        return responseObject;
-      })["catch"](function (error) {
-        console.log(error);
-        return error;
-      });
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var ESign = /*#__PURE__*/_createClass(function ESign() {
+  var _this = this;
+
+  _classCallCheck(this, ESign);
+
+  _defineProperty(this, "SANDBOX_ROOT_URL", "https://sandbox.e-sign.co.uk/v3/");
+
+  _defineProperty(this, "ROOT_URL", "https://api.e-sign.co.uk/v3/");
+
+  _defineProperty(this, "environment", this.SANDBOX_ROOT_URL);
+
+  _defineProperty(this, "makeRequest", function (method, path, headers, data, parameters) {
+    // Two seprate calls depending on if parameters are defined
+    if (parameters != null) {
+      // Function construsts the path from the path and the path parameters
+      var pathAndParameters = _this.getPath(path, parameters);
+
+      if (data != null) {
+        // Axios http call
+        (0, _axios["default"])({
+          method: method,
+          url: _this.environment + pathAndParameters,
+          headers: headers,
+          data: data,
+          responseType: 'json'
+        }).then(function (response) {
+          var responseObject = {
+            json: response.data,
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+          };
+          return responseObject;
+        })["catch"](function (error) {
+          console.log(error);
+          return error;
+        });
+      } else {
+        // Axios http call
+        (0, _axios["default"])({
+          method: method,
+          url: _this.environment + pathAndParameters,
+          headers: headers,
+          responseType: 'json'
+        }).then(function (response) {
+          var responseObject = {
+            json: response.data,
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+          };
+          return responseObject;
+        })["catch"](function (error) {
+          console.log(error);
+          return error;
+        });
+      }
     } else {
-      // Axios http call
-      (0, _axios["default"])({
-        method: method,
-        url: environment + pathAndParameters,
-        headers: headers,
-        responseType: 'json'
-      }).then(function (response) {
-        var responseObject = {
-          json: response.data,
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers
-        };
-        return responseObject;
-      })["catch"](function (error) {
-        console.log(error);
-        return error;
-      });
+      if (data != null) {
+        // Axios http call
+        (0, _axios["default"])({
+          method: method,
+          url: _this.environment + path,
+          headers: headers,
+          data: data,
+          responseType: 'json'
+        }).then(function (response) {
+          var responseObject = {
+            json: response.data,
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+          };
+          return responseObject;
+        })["catch"](function (error) {
+          console.log(error);
+          return error;
+        });
+      } else {
+        // Axios http call
+        (0, _axios["default"])({
+          method: method,
+          url: _this.environment + path,
+          headers: headers,
+          responseType: 'json'
+        }).then(function (response) {
+          var responseObject = {
+            json: response.data,
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers
+          };
+          return responseObject;
+        })["catch"](function (error) {
+          console.log(error);
+          return error;
+        });
+      }
     }
-  } else {
-    if (data != null) {
-      // Axios http call
-      (0, _axios["default"])({
-        method: method,
-        url: environment + path,
-        headers: headers,
-        data: data,
-        responseType: 'json'
-      }).then(function (response) {
-        var responseObject = {
-          json: response.data,
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers
-        };
-        return responseObject;
-      })["catch"](function (error) {
-        console.log(error);
-        return error;
-      });
-    } else {
-      // Axios http call
-      (0, _axios["default"])({
-        method: method,
-        url: environment + path,
-        headers: headers,
-        responseType: 'json'
-      }).then(function (response) {
-        var responseObject = {
-          json: response.data,
-          status: response.status,
-          statusText: response.statusText,
-          headers: response.headers
-        };
-        return responseObject;
-      })["catch"](function (error) {
-        console.log(error);
-        return error;
-      });
-    }
-  }
-}; // This function is the gateway to all functions
+  });
+
+  _defineProperty(this, "esign", /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(apiKey, call, data, sandbox) {
+      var callData, method, path, headers, body, parameters, pathWithParameters;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              // set the environment based on a boolean balue for sandbox
+              if (sandbox) {
+                _this.environment = _this.SANDBOX_ROOT_URL;
+              } else if (!sandbox) {
+                _this.environment = _this.ROOT_URL;
+              } else {
+                _this.environment = _this.SANDBOX_ROOT_URL;
+              } // how this function works
+              // Check all the parameters are valid
+              // Select the correct object 
 
 
-var esign = /*#__PURE__*/function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(apiKey, call, data, sandbox) {
-    var callData, method, path, headers, body, parameters, pathWithParameters;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            // set the environment based on a boolean balue for sandbox
-            if (sandbox) {
-              environment = SANDBOX_ROOT_URL;
-            } else if (!sandbox) {
-              environment = ROOT_URL;
-            } else {
-              environment = SANDBOX_ROOT_URL;
-            } // how this function works
-            // Check all the parameters are valid
-            // Select the correct object 
+              if (!(call != undefined && call != null && call != "")) {
+                _context.next = 16;
+                break;
+              }
 
+              _context.next = 4;
+              return _this.getCallData(call);
 
-            if (!(call != undefined && call != null && call != "")) {
-              _context.next = 8;
-              break;
-            }
+            case 4:
+              callData = _context.sent;
 
-            _context.next = 4;
-            return getCallData(call);
+              if (!(callData == undefined)) {
+                _context.next = 9;
+                break;
+              }
 
-          case 4:
-            callData = _context.sent;
+              return _context.abrupt("return", {
+                message: "The call you passed does not match any defined call",
+                call: call
+              });
 
-            if (callData == undefined) {
-              console.log("The call you passed does not match any defined call:", call);
-            } else {
+            case 9:
               method = callData.method;
               path = callData.path;
               headers = {
@@ -160,1046 +177,1013 @@ var esign = /*#__PURE__*/function () {
 
               if (callData.parameters) {
                 parameters = data.parameters;
-                pathWithParameters = getPath(path, parameters);
+                pathWithParameters = _this.getPath(path, parameters);
 
                 if (body == {} || body == undefined) {
-                  makeRequest(method, pathWithParameters, headers, null, parameters);
+                  _this.makeRequest(method, pathWithParameters, headers, null, parameters);
                 } else {
-                  makeRequest(method, pathWithParameters, headers, data, parameters);
+                  _this.makeRequest(method, pathWithParameters, headers, data, parameters);
                 }
               } else {
                 if (body == {} || body == undefined) {
-                  makeRequest(method, path, headers, null, null);
+                  _this.makeRequest(method, path, headers, null, null);
                 } else {
-                  makeRequest(method, path, headers, data, null);
+                  _this.makeRequest(method, path, headers, data, null);
                 }
               }
-            }
 
-            _context.next = 10;
-            break;
+            case 14:
+              _context.next = 18;
+              break;
 
-          case 8:
-            console.log("The call you passed does not match any defined call", call);
-            return _context.abrupt("return", {
-              message: "The call you passed does not match any defined call"
-            });
+            case 16:
+              console.log("The call you passed does not match any defined call", call);
+              return _context.abrupt("return", {
+                message: "The call you passed does not match any defined call"
+              });
 
-          case 10:
-          case "end":
-            return _context.stop();
+            case 18:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x, _x2, _x3, _x4) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+
+  _defineProperty(this, "getPath", function (path, parameters) {
+    // this function takes the path from the call data object and a parameters object
+    // It looks through the path string and identifies which parts are parameters
+    // It then searches the parameters object for the relevant parameter
+    // It returns the completed path as a string
+    var arr = path.split('/');
+    var returnPath = '';
+
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i][0] == '{') {
+        var paramSearch = arr[i].slice(1, -1);
+        var param = parameters[paramSearch];
+        returnPath = returnPath + '/' + param;
+      } else {
+        if (returnPath == '') {
+          returnPath = arr[i];
+        } else {
+          returnPath = returnPath + '/' + arr[i];
         }
       }
-    }, _callee);
-  }));
-
-  return function esign(_x, _x2, _x3, _x4) {
-    return _ref.apply(this, arguments);
-  };
-}(); // This function takes the path and parameters and returns the completed path for the request
-
-
-exports.esign = esign;
-
-var getPath = function getPath(path, parameters) {
-  // this function takes the path from the call data object and a parameters object
-  // It looks through the path string and identifies which parts are parameters
-  // It then searches the parameters object for the relevant parameter
-  // It returns the completed path as a string
-  var arr = path.split('/');
-  var returnPath = '';
-
-  for (var i = 0; i < arr.length; i++) {
-    if (arr[i][0] == '{') {
-      var paramSearch = arr[i].slice(1, -1);
-      var param = parameters[paramSearch];
-      returnPath = returnPath + '/' + param;
-    } else {
-      if (returnPath == '') {
-        returnPath = arr[i];
-      } else {
-        returnPath = returnPath + '/' + arr[i];
-      }
     }
-  }
 
-  return returnPath;
-}; // Assign the data fir the http call
+    return returnPath;
+  });
 
+  _defineProperty(this, "getCallData", function (call) {
+    var returnData;
 
-var getCallData = function getCallData(call) {
-  var returnData;
+    switch (call) {
+      // Accounts
+      case 'createAccount':
+        returnData = _this.createAccount;
+        break;
 
-  switch (call) {
-    // Accounts
-    case 'createAccount':
-      returnData = createAccount;
-      break;
+      case 'retrieveAccount':
+        returnData = _this.retrieveAccount;
+        break;
 
-    case 'retrieveAccount':
-      returnData = retrieveAccount;
-      break;
+      case 'updateAccount':
+        returnData = _this.updateAccount;
+        break;
 
-    case 'updateAccount':
-      returnData = updateAccount;
-      break;
+      case 'deleteAccount':
+        returnData = _this.deleteAccount;
+        break;
 
-    case 'deleteAccount':
-      returnData = deleteAccount;
-      break;
+      case 'getAccountWithAllUsers':
+        returnData = _this.getAccountWithAllUsers;
+        break;
 
-    case 'getAccountWithAllUsers':
-      returnData = getAccountWithAllUsers;
-      break;
+      case 'getAccountStats':
+        returnData = _this.getAccountStats;
+        break;
 
-    case 'getAccountStats':
-      returnData = getAccountStats;
-      break;
+      case 'getRecentEvents':
+        returnData = _this.getRecentEvents;
+        break;
 
-    case 'getRecentEvents':
-      returnData = getRecentEvents;
-      break;
+      case 'getExtensionsList':
+        returnData = _this.getExtensionsList;
+        break;
 
-    case 'getExtensionsList':
-      returnData = getExtensionsList;
-      break;
+      case 'enableExtension':
+        returnData = _this.enableExtension;
+        break;
 
-    case 'enableExtension':
-      returnData = enableExtension;
-      break;
-
-    case 'disableExtension':
-      returnData = disableExtension;
-      break;
-    // Envelopes
-
-    case 'createEnvelope':
-      returnData = createEnvelope;
-      break;
-
-    case 'retrieveEnvelope':
-      returnData = retrieveEnvelope;
-      break;
-
-    case 'archiveEnvelope':
-      returnData = archiveEnvelope;
-      break;
-
-    case 'restoreEnvelope':
-      returnData = restoreEnvelope;
-      break;
-
-    case 'redirectToWebApp':
-      returnData = redirectToWebApp;
-      break;
-
-    case 'getSignedEnvelopes':
-      returnData = getSignedEnvelopes;
-      break;
-
-    case 'getCompletedEnvelopes':
-      returnData = getCompletedEnvelopes;
-      break;
-
-    case 'getPendingEnvelopes':
-      returnData = getPendingEnvelopes;
-      break;
-
-    case 'getDeclinedEnvelopes':
-      returnData = getDeclinedEnvelopes;
-      break;
-
-    case 'getInboxEnvelopes':
-      returnData = getInboxEnvelopes;
-      break;
-
-    case 'getArchivedEnvelopes':
-      returnData = getArchivedEnvelopes;
-      break;
-
-    case 'getEnvelope':
-      returnData = getEnvelope;
-      break;
-
-    case 'permanentlyDeleteEnvelope':
-      returnData = permanentlyDeleteEnvelope;
-      break;
-
-    case 'getSignerEnvelope':
-      returnData = getSignerEnvelope;
-      break;
-
-    case 'getAuditTrail':
-      returnData = getAuditTrail;
-      break;
-
-    case 'getAttachments':
-      returnData = getAttachments;
-      break;
-    // OAuth
-
-    case 'createOauthApp':
-      returnData = createOauthApp;
-      break;
-
-    case 'getOauthApps':
-      returnData = getOauthApps;
-      break;
-
-    case 'getOauthApp':
-      returnData = getOauthApp;
-      break;
-
-    case 'deleteOauthApp':
-      returnData = deleteOauthApp;
-      break;
-
-    case 'createAuthCode':
-      returnData = createAuthCode;
-      break;
-
-    case 'retrieveAccessToken':
-      returnData = retrieveAccessToken;
-      break;
-
-    case 'revokeAccessToken':
-      returnData = revokeAccessToken;
-      break;
-
-    case 'getTokenInfo':
-      returnData = getTokenInfo;
-      break;
-    // Payments
-
-    case 'addPaymentDetails':
-      returnData = addPaymentDetails;
-      break;
-
-    case 'deletePaymentDetails':
-      returnData = deletePaymentDetails;
-      break;
-
-    case 'setupDirectDebit':
-      returnData = setupDirectDebit;
-      break;
-
-    case 'confirmDirectDebit':
-      returnData = confirmDirectDebit;
-      break;
-
-    case 'cancelDirectDebit':
-      returnData = cancelDirectDebit;
-      break;
-
-    case 'getPlans':
-      returnData = getPlans;
-      break;
-
-    case 'changePlan':
-      returnData = changePlan;
-      break;
-
-    case 'paymentCharge':
-      returnData = paymentCharge;
-      break;
-
-    case 'getInvoices':
-      returnData = getInvoices;
-      break;
-
-    case 'getInvoice':
-      returnData = getInvoice;
-      break;
-    // saml
-
-    case 'ssoLogin':
-      returnData = ssoLogin;
-      break;
-
-    case 'ssoCallback':
-      returnData = ssoCallback;
-      break;
-    // signers
-
-    case 'createReminder':
-      returnData = createReminder;
-      break;
-
-    case 'getReminder':
-      returnData = getReminder;
-      break;
-
-    case 'destroyReminder':
-      returnData = destroyReminder;
-      break;
-
-    case 'signDocument':
-      returnData = signDocument;
-      break;
-
-    case 'getSignerEnvelopeFromSigners':
-      returnData = getSignerEnvelopeFromSigners;
-      break;
-
-    case 'updateSigner':
-      returnData = updateSigner;
-      break;
-    // Tags
-
-    case 'createTag':
-      returnData = createTag;
-      break;
-
-    case 'getTags':
-      returnData = getTags;
-      break;
-
-    case 'updateTag':
-      returnData = updateTag;
-      break;
-
-    case 'deleteTag':
-      returnData = deleteTag;
-      break;
-
-    case 'getResourcesByTagAndType':
-      returnData = getResourcesByTagAndType;
-      break;
-    // Templates
-
-    case 'createTemplate':
-      returnData = createTemplate;
-      break;
-
-    case 'getTemplates':
-      returnData = getTemplates;
-      break;
-
-    case 'generateEnvelopeRequest':
-      returnData = generateEnvelopeRequest;
-      break;
-
-    case 'updateTemplate':
-      returnData = updateTemplate;
-      break;
-
-    case 'retrieveTemplate':
-      returnData = retrieveTemplate;
-      break;
-
-    case 'deleteTemplate':
-      returnData = deleteTemplate;
-      break;
-    // uploads
-
-    case 'uploadFiles':
-      returnData = uploadFiles;
-      break;
-
-    case 'archiveFiles':
-      returnData = archiveFiles;
-      break;
-
-    case 'getFilesByType':
-      returnData = getFilesByType;
-      break;
-
-    case 'getFileByID':
-      returnData = getFileByID;
-      break;
-
-    case 'uploadCSVFile':
-      returnData = uploadCSVFile;
-      break;
-    // Users
-
-    case 'userLogin':
-      returnData = userLogin;
-      break;
-
-    case 'userLogout':
-      returnData = userLogout;
-      break;
-
-    case 'createContact':
-      returnData = createContact;
-      break;
-
-    case 'getContact':
-      returnData = getContact;
-      break;
-
-    case 'updateContact':
-      returnData = updateContact;
-      break;
-
-    case 'deleteContact':
-      returnData = deleteContact;
-      break;
-
-    case 'requestPasswordReset':
-      returnData = requestPasswordReset;
-      break;
-
-    case 'resetPassword':
-      returnData = resetPassword;
-      break;
-
-    case 'redirectToPasswordReset':
-      returnData = redirectToPasswordReset;
-      break;
-
-    case 'createSignature':
-      returnData = createSignature;
-      break;
-
-    case 'updateSignature':
-      returnData = updateSignature;
-      break;
-
-    case 'getSignature':
-      returnData = getSignature;
-      break;
-
-    case 'deleteSignature':
-      returnData = deleteSignature;
-      break;
-
-    case 'inviteUser':
-      returnData = inviteUser;
-      break;
-
-    case 'retrieveUsers':
-      returnData = retrieveUsers;
-      break;
-
-    case 'getUserByID':
-      returnData = getUserByID;
-      break;
-
-    case 'updateUser':
-      returnData = updateUser;
-      break;
-
-    case 'removeUser':
-      returnData = removeUser;
-      break;
-
-    case 'resendToken':
-      returnData = resendToken;
-      break;
-
-    case 'confirmUser':
-      returnData = confirmUser;
-      break;
-
-    case 'confirmInvite':
-      returnData = confirmInvite;
-      break;
-    // webhooks
-
-    case 'createWebhook':
-      returnData = createWebhook;
-      break;
-
-    case 'getWebhooks':
-      returnData = getWebhooks;
-      break;
-
-    case 'deleteWebhook':
-      returnData = deleteWebhook;
-      break;
-    // Default
-
-    default:
-      return undefined;
-  }
-
-  console.log('return data:', returnData);
-  return returnData;
-}; // ==============
-// == Accounts ==
-// ==============
-// POST Create Account 'accounts'
-
-
-var createAccount = {
-  method: "POST",
-  path: "accounts",
-  parameters: false
-}; // GET Retrive Account 'accounts'
-
-var retrieveAccount = {
-  method: "GET",
-  path: "accounts",
-  parameters: false
-}; // PATCH Update Account 'accounts'
-
-var updateAccount = {
-  method: "UPDATE",
-  path: "accounts",
-  parameters: false
-}; // DELETE Delete Account 'accounts'
-
-var deleteAccount = {
-  method: "DELETE",
-  path: "accounts",
-  parameters: false
-}; // GET Account With All Users 'accounts/includes/user'
-
-var getAccountWithAllUsers = {
-  method: "GET",
-  path: "accounts/includes/user",
-  parameters: false
-}; // GET Account Stats 'accounts/{id}/stats'
-
-var getAccountStats = {
-  method: "GET",
-  path: "accounts/{id}/stats",
-  parameters: true
-}; // GET Recent events 'accounts/{id}/events'
-
-var getRecentEvents = {
-  method: "GET",
-  path: "accounts/{id}/events",
-  parameters: true
-}; // GET List Extensions'accounts/{id}extensions'
-
-var getExtensionsList = {
-  method: "GET",
-  path: "accounts/{id}extensions",
-  parameters: true
-}; // PATCH Enable Extension 'accounts/{id}/extensions'
-
-var enableExtension = {
-  method: "PATCH",
-  path: "accounts/{id}extensions",
-  parameters: true
-}; // DELETE Disable extension 'accounts/{id}/extensions'
-
-var disableExtension = {
-  method: "DELETE",
-  path: "accounts/{id}extensions",
-  parameters: true
-}; // ===============
-// == Envelopes ==
-// ===============
-// POST Create envelope 'envelopes'
-
-var createEnvelope = {
-  method: "POST",
-  path: "envelopes",
-  parameters: false
-}; // GET Retrive envelopes 'envelopes'
-
-var retrieveEnvelope = {
-  method: "GET",
-  path: "envelopes",
-  parameters: false
-}; // DELETE Achive envelopes 'envelopes'
-
-var archiveEnvelope = {
-  method: "DELETE",
-  path: "envelopes",
-  parameters: false
-}; // PATCH Restore archived envelopes 'envelopes'
-
-var restoreEnvelope = {
-  method: "PATCH",
-  path: "envelopes",
-  parameters: false
-}; // PATCH Redirect to web add
-
-var redirectToWebApp = {
-  method: "POST",
-  path: "envelopes/redirect",
-  parameters: false
-}; // GET Retrive signed envelopes 'envelopes/signed'
-
-var getSignedEnvelopes = {
-  method: "GET",
-  path: "envelopes/signed",
-  parameters: false
-}; // GET Retrive completed envelopes 'envelopes/completed'
-
-var getCompletedEnvelopes = {
-  method: "GET",
-  path: "envelopes/completed",
-  parameters: false
-}; // GET Retrive pending envelopes 'envelopes/pending'
-
-var getPendingEnvelopes = {
-  method: "GET",
-  path: "envelopes/pending",
-  parameters: false
-}; // GET Retrive declined envelopes 'envelopes/declined'
-
-var getDeclinedEnvelopes = {
-  method: "GET",
-  path: "envelopes/declined",
-  parameters: false
-}; // GET Retrive inbox envelopes 'envelopes/inbox'
-
-var getInboxEnvelopes = {
-  method: "GET",
-  path: "envelopes/inbox",
-  parameters: false
-}; // GET Retrive achived envelopes 'envelopes/archived'
-
-var getArchivedEnvelopes = {
-  method: "GET",
-  path: "envelopes/archived",
-  parameters: false
-}; // GET Retrive envelope 'envelopes/{id}'
-
-var getEnvelope = {
-  method: "GET",
-  path: "envelopes/{id}",
-  parameters: true
-}; // DELETE Permanently delete envelope 'envelopes/{id}'
-
-var permanentlyDeleteEnvelope = {
-  method: "DELETE",
-  path: "envelopes/{id}",
-  parameters: true
-}; // GET Retrive signer envelope 'envelopes/{id}/signer/{signer_id}'
-
-var getSignerEnvelope = {
-  method: "GET",
-  path: "envelopes/{id}/signer/{signer_id}",
-  parameters: true
-}; // GET Retrive Audit Trail 'envelopes/{id}/audits'
-
-var getAuditTrail = {
-  method: "GET",
-  path: "envelopes/{id}/audits",
-  parameters: true
-}; // GET Retrive attachments 'envelopes/{id}/attachments'
-
-var getAttachments = {
-  method: "GET",
-  path: "envelopes/{id}/attachments",
-  parameters: true
-}; // ===========
-// == OAuth ==
-// ===========
-// POST Create an OAuth application 'oauth/applications'
-
-var createOauthApp = {
-  method: "POST",
-  path: "oauth/applications",
-  parameters: false
-}; // GET Get oauth apps 'oauth/applications'
-
-var getOauthApps = {
-  method: "GET",
-  path: "oauth/applications",
-  parameters: false
-}; // GET Show oauth app 'oauth/applications/{id}'
-
-var getOauthApp = {
-  method: "GET",
-  path: "oauth/applications/{id}",
-  parameters: true
-}; // DELETE Delete oauth app 'oauth/applications/{id}'
-
-var deleteOauthApp = {
-  method: "DELETE",
-  path: "oauth/applications/{id}",
-  parameters: true
-}; // POST Create Authorization code 'oauth/authorize'
-
-var createAuthCode = {
-  method: "POST",
-  path: "oauth/authorize",
-  parameters: false
-}; // POST Retrieve Access token 'oauth/token'
-
-var retrieveAccessToken = {
-  method: "POST",
-  path: "oauth/token",
-  parameters: false
-}; // POST Revoke Access token 'oauth/revoke'
-
-var revokeAccessToken = {
-  method: "POST",
-  path: "oauth/revoke",
-  parameters: false
-}; // GET Get token info 'oauth/token/info'
-
-var getTokenInfo = {
-  method: "GET",
-  path: "oauth/token/info",
-  parameters: false
-}; // ==============
-// == Payments ==
-// ==============
-// POST add payment details 'payments/cards'
-
-var addPaymentDetails = {
-  method: "POST",
-  path: "payments/cards",
-  parameters: false
-}; // DELETE delete payment details 'payments/cards'
-
-var deletePaymentDetails = {
-  method: "DELETE",
-  path: "payments/cards",
-  parameters: false
-}; // POST set up directs debit 'payments/direct_debits'
-
-var setupDirectDebit = {
-  method: "POST",
-  path: "payments/direct_debits",
-  parameters: false
-}; // PATCH confirms direct debit 'payments/direct_debits'
-
-var confirmDirectDebit = {
-  method: "PATCH",
-  path: "payments/direct_debits",
-  parameters: false
-}; // DELETE cancel direct debit 'payments/direct_debits'
-
-var cancelDirectDebit = {
-  method: "DELETE",
-  path: "payments/direct_debits",
-  parameters: false
-}; // GET get plans 'payments/plans'
-
-var getPlans = {
-  method: "GET",
-  path: "payments/plans",
-  parameters: false
-}; // PATCH change plan 'payments/plans'
-
-var changePlan = {
-  method: "GET",
-  path: "payments/plans",
-  parameters: false
-}; // POST payment charge 'payments'
-
-var paymentCharge = {
-  method: "POST",
-  path: "payments",
-  parameters: false
-}; // GET get invoices 'payments'
-
-var getInvoices = {
-  method: "GET",
-  path: "payments",
-  parameters: false
-}; // GET get invoice 'payments/{id}'
-
-var getInvoice = {
-  method: "GET",
-  path: "payments/{id}",
-  parameters: true
-}; // ==========
-// == SAML ==
-// ==========
-// GET SSO organisation Login 'saml/auth/login'
-
-var ssoLogin = {
-  method: "GET",
-  path: "saml/auth/login",
-  parameters: false
-}; // POST SSO organisation callback 'saml/auth/callback'
-
-var ssoCallback = {
-  method: "POST",
-  path: "saml/auth/callback",
-  parameters: false
-}; // =============
-// == Signers ==
-// =============
-// POST create reminder 'signers/{id}/reminders'
-
-var createReminder = {
-  method: "POST",
-  path: "signers/{id}/reminders",
-  parameters: true
-}; // GET get reminder 'signers/{id}/reminders'
-
-var getReminder = {
-  method: "GET",
-  path: "signers/{id}/reminders",
-  parameters: true
-}; // DELETE destroy reminder 'signers/{id}/reminders'
-
-var destroyReminder = {
-  method: "DELETE",
-  path: "signers/{id}/reminders",
-  parameters: true
-}; // POST Sign Document 'signers/{id}/doumnets/{document_id}'
-
-var signDocument = {
-  method: "POST",
-  path: "signers/{id}/doumnets/{document_id}",
-  parameters: true
-}; // GET get signer envelope 'signers/{id}'
-
-var getSignerEnvelopeFromSigners = {
-  method: "GET",
-  path: "signers/{id}",
-  parameters: true
-}; // PATCH update signer 'signers/{id}'
-
-var updateSigner = {
-  method: "GET",
-  path: "signers/{id}",
-  parameters: true
-}; // ==========
-// == Tags ==
-// ==========
-// POST Create tag 'tags'
-
-var createTag = {
-  method: "POST",
-  path: "tags",
-  parameters: false
-}; // GET get tags 'tags'
-
-var getTags = {
-  method: "GET",
-  path: "tags",
-  parameters: false
-}; // PATCH Update tag 'tags/{id}'
-
-var updateTag = {
-  method: "PATCH",
-  path: "tags/{id}",
-  parameters: true
-}; // DELETE delete tag 'tags/{id}'
-
-var deleteTag = {
-  method: "DELETE",
-  path: "tags/{id}",
-  parameters: true
-};
-var getResourcesByTagAndType = {
-  method: "GET",
-  path: "tags/{id}/{resource_type}",
-  parameters: true
-}; // ===============
-// == Templates ==
-// ===============
-// POST create template 'templates'
-
-var createTemplate = {
-  method: "POST",
-  path: "templates",
-  parameters: false
-}; // GET get templates 'templates
-
-var getTemplates = {
-  method: "GET",
-  path: "templates",
-  parameters: false
-}; // POST generate envelope template 'templates/{id}'
-
-var generateEnvelopeRequest = {
-  method: "POST",
-  path: "templates/{id}",
-  parameters: true
-}; // PATCH update template 'templates/{id}'
-
-var updateTemplate = {
-  method: "PATCH",
-  path: "templates/{id}",
-  parameters: true
-}; // GET retrieve template 'templates/{id}'
-
-var retrieveTemplate = {
-  method: "POST",
-  path: "templates/{id}",
-  parameters: true
-}; // DELETE delete template 'templates/{id}'
-
-var deleteTemplate = {
-  method: "DELETE",
-  path: "templates/{id}",
-  parameters: true
-}; // =============
-// == Uploads ==
-// =============
-// POST upload files 'uploads'
-
-var uploadFiles = {
-  method: "POST",
-  path: "uploads",
-  parameters: false
-}; // DELETE archive files 'uploads'
-
-var archiveFiles = {
-  method: "DELETE",
-  path: "uploads",
-  parameters: false
-}; // GET get files 'uploads/list/{type}'
-
-var getFilesByType = {
-  method: "GET",
-  path: "uploads/list/{type}",
-  parameters: true
-}; // GET upload file by id 'uploads/{id}'
-
-var getFileByID = {
-  method: "GET",
-  path: "uploads/{id}",
-  parameters: true
-}; // POST upload csv file 'uploads/csv'
-
-var uploadCSVFile = {
-  method: "POST",
-  path: "uploads/csv",
-  parameters: false
-}; // ===========
-// == Users ==
-// ===========
-// POST login 'users/login'
-
-var userLogin = {
-  method: "POST",
-  path: "users/login",
-  parameters: false
-}; // DELETE logout 'users/logout'
-
-var userLogout = {
-  method: "DELETE",
-  path: "users/logout",
-  parameters: false
-}; // POST create contact 'users/contacts'
-
-var createContact = {
-  method: "POST",
-  path: "users/contacts",
-  parameters: false
-}; // GET get contacts 'users/contacts'
-
-var getContact = {
-  method: "POST",
-  path: "users/contacts",
-  parameters: false
-}; // PATCH update contact 'users/contacts/{id}'
-
-var updateContact = {
-  method: "PATCH",
-  path: "users/contacts/{id}",
-  parameters: true
-}; // DELETE delete contact 'users/contacts/{id}'
-
-var deleteContact = {
-  method: "DELETE",
-  path: "users/contacts/{id}",
-  parameters: true
-}; // POST request reset password 'users/passwords'
-
-var requestPasswordReset = {
-  method: "POST",
-  path: "users/passwords",
-  parameters: false
-}; // PATCH reset password 'users/passwords/update'
-
-var resetPassword = {
-  method: "PATCH",
-  path: "users/passwords/update",
-  parameters: false
-}; // GET  redirect to password edit page 'users/passwords/edit'
-
-var redirectToPasswordReset = {
-  method: "POST",
-  path: "users/passwords/edit",
-  parameters: false
-}; // POST create signature 'users/signatures'
-
-var createSignature = {
-  method: "POST",
-  path: "users/signatures",
-  parameters: false
-}; // PATCH update signature 'users/signatures/{id}'
-
-var updateSignature = {
-  method: "PATCH",
-  path: "users/signatures/{id}",
-  parameters: true
-}; // GET get signature 'users/signatures/{id}'
-
-var getSignature = {
-  method: "GET",
-  path: "users/signatures/{id}",
-  parameters: true
-}; // DELETE delete signature 'users/signatures/{id}'
-
-var deleteSignature = {
-  method: "DELETE",
-  path: "users/signatures/{id}",
-  parameters: true
-}; // POST invite user 'users'
-
-var inviteUser = {
-  method: "POST",
-  path: "users",
-  parameters: false
-}; // GET retrieve users 'users
-
-var retrieveUsers = {
-  method: "GET",
-  path: "users",
-  parameters: false
-}; // GET get user 'users/{id}'
-
-var getUserByID = {
-  method: "GET",
-  path: "users/{id}",
-  parameters: true
-}; // PATCH updates a user 'users/{id}'
-
-var updateUser = {
-  method: "PATCH",
-  path: "users/{id}",
-  parameters: true
-}; // DELETE remove user 'users/{id}'
-
-var removeUser = {
-  method: "DELETE",
-  path: "users/{id}",
-  parameters: true
-}; // POST resend token 'users/confirms'
-
-var resendToken = {
-  method: "POST",
-  path: "users/confirms",
-  parameters: false
-}; // GET confirms a user 'users/{id}/confirms/{token}'
-
-var confirmUser = {
-  method: "GET",
-  path: "users/{id}/confirms/{token}",
-  parameters: true
-}; // PATCH confirms an invite 'users/{id}/invites/{token}'
-
-var confirmInvite = {
-  method: "PATCH",
-  path: "users/{id}/confirms/{token}",
-  parameters: true
-}; // ===============
-// == Web Hooks ==
-// ===============
-// POST Create webhok 'webhooks'
-
-var createWebhook = {
-  method: "POST",
-  path: "webhooks",
-  parameters: false
-}; // GET get webhok 'webhooks'
-
-var getWebhooks = {
-  method: "GET",
-  path: "webhooks",
-  parameters: false
-}; // DELETE delete webho0k 'webhooks/{id}'
-
-var deleteWebhook = {
-  method: "DELETE",
-  path: "webhooks/{id}",
-  parameters: true
-};
+      case 'disableExtension':
+        returnData = _this.disableExtension;
+        break;
+      // Envelopes
+
+      case 'createEnvelope':
+        returnData = _this.createEnvelope;
+        break;
+
+      case 'retrieveEnvelope':
+        returnData = _this.retrieveEnvelope;
+        break;
+
+      case 'archiveEnvelope':
+        returnData = _this.archiveEnvelope;
+        break;
+
+      case 'restoreEnvelope':
+        returnData = _this.restoreEnvelope;
+        break;
+
+      case 'redirectToWebApp':
+        returnData = _this.redirectToWebApp;
+        break;
+
+      case 'getSignedEnvelopes':
+        returnData = _this.getSignedEnvelopes;
+        break;
+
+      case 'getCompletedEnvelopes':
+        returnData = _this.getCompletedEnvelopes;
+        break;
+
+      case 'getPendingEnvelopes':
+        returnData = _this.getPendingEnvelopes;
+        break;
+
+      case 'getDeclinedEnvelopes':
+        returnData = _this.getDeclinedEnvelopes;
+        break;
+
+      case 'getInboxEnvelopes':
+        returnData = _this.getInboxEnvelopes;
+        break;
+
+      case 'getArchivedEnvelopes':
+        returnData = _this.getArchivedEnvelopes;
+        break;
+
+      case 'getEnvelope':
+        returnData = _this.getEnvelope;
+        break;
+
+      case 'permanentlyDeleteEnvelope':
+        returnData = _this.permanentlyDeleteEnvelope;
+        break;
+
+      case 'getSignerEnvelope':
+        returnData = _this.getSignerEnvelope;
+        break;
+
+      case 'getAuditTrail':
+        returnData = _this.getAuditTrail;
+        break;
+
+      case 'getAttachments':
+        returnData = _this.getAttachments;
+        break;
+      // OAuth
+
+      case 'createOauthApp':
+        returnData = _this.createOauthApp;
+        break;
+
+      case 'getOauthApps':
+        returnData = _this.getOauthApps;
+        break;
+
+      case 'getOauthApp':
+        returnData = _this.getOauthApp;
+        break;
+
+      case 'deleteOauthApp':
+        returnData = _this.deleteOauthApp;
+        break;
+
+      case 'createAuthCode':
+        returnData = _this.createAuthCode;
+        break;
+
+      case 'retrieveAccessToken':
+        returnData = _this.retrieveAccessToken;
+        break;
+
+      case 'revokeAccessToken':
+        returnData = _this.revokeAccessToken;
+        break;
+
+      case 'getTokenInfo':
+        returnData = _this.getTokenInfo;
+        break;
+      // Payments
+
+      case 'addPaymentDetails':
+        returnData = _this.addPaymentDetails;
+        break;
+
+      case 'deletePaymentDetails':
+        returnData = _this.deletePaymentDetails;
+        break;
+
+      case 'setupDirectDebit':
+        returnData = _this.setupDirectDebit;
+        break;
+
+      case 'confirmDirectDebit':
+        returnData = _this.confirmDirectDebit;
+        break;
+
+      case 'cancelDirectDebit':
+        returnData = _this.cancelDirectDebit;
+        break;
+
+      case 'getPlans':
+        returnData = _this.getPlans;
+        break;
+
+      case 'changePlan':
+        returnData = _this.changePlan;
+        break;
+
+      case 'paymentCharge':
+        returnData = _this.paymentCharge;
+        break;
+
+      case 'getInvoices':
+        returnData = _this.getInvoices;
+        break;
+
+      case 'getInvoice':
+        returnData = _this.getInvoice;
+        break;
+      // saml
+
+      case 'ssoLogin':
+        returnData = _this.ssoLogin;
+        break;
+
+      case 'ssoCallback':
+        returnData = _this.ssoCallback;
+        break;
+      // signers
+
+      case 'createReminder':
+        returnData = _this.createReminder;
+        break;
+
+      case 'getReminder':
+        returnData = _this.getReminder;
+        break;
+
+      case 'destroyReminder':
+        returnData = _this.destroyReminder;
+        break;
+
+      case 'signDocument':
+        returnData = _this.signDocument;
+        break;
+
+      case 'getSignerEnvelopeFromSigners':
+        returnData = _this.getSignerEnvelopeFromSigners;
+        break;
+
+      case 'updateSigner':
+        returnData = _this.updateSigner;
+        break;
+      // Tags
+
+      case 'createTag':
+        returnData = _this.createTag;
+        break;
+
+      case 'getTags':
+        returnData = _this.getTags;
+        break;
+
+      case 'updateTag':
+        returnData = _this.updateTag;
+        break;
+
+      case 'deleteTag':
+        returnData = _this.deleteTag;
+        break;
+
+      case 'getResourcesByTagAndType':
+        returnData = _this.getResourcesByTagAndType;
+        break;
+      // Templates
+
+      case 'createTemplate':
+        returnData = _this.createTemplate;
+        break;
+
+      case 'getTemplates':
+        returnData = _this.getTemplates;
+        break;
+
+      case 'generateEnvelopeRequest':
+        returnData = _this.generateEnvelopeRequest;
+        break;
+
+      case 'updateTemplate':
+        returnData = _this.updateTemplate;
+        break;
+
+      case 'retrieveTemplate':
+        returnData = _this.retrieveTemplate;
+        break;
+
+      case 'deleteTemplate':
+        returnData = _this.deleteTemplate;
+        break;
+      // uploads
+
+      case 'uploadFiles':
+        returnData = _this.uploadFiles;
+        break;
+
+      case 'archiveFiles':
+        returnData = _this.archiveFiles;
+        break;
+
+      case 'getFilesByType':
+        returnData = _this.getFilesByType;
+        break;
+
+      case 'getFileByID':
+        returnData = _this.getFileByID;
+        break;
+
+      case 'uploadCSVFile':
+        returnData = _this.uploadCSVFile;
+        break;
+      // Users
+
+      case 'userLogin':
+        returnData = _this.userLogin;
+        break;
+
+      case 'userLogout':
+        returnData = _this.userLogout;
+        break;
+
+      case 'createContact':
+        returnData = _this.createContact;
+        break;
+
+      case 'getContact':
+        returnData = _this.getContact;
+        break;
+
+      case 'updateContact':
+        returnData = _this.updateContact;
+        break;
+
+      case 'deleteContact':
+        returnData = _this.deleteContact;
+        break;
+
+      case 'requestPasswordReset':
+        returnData = _this.requestPasswordReset;
+        break;
+
+      case 'resetPassword':
+        returnData = _this.resetPassword;
+        break;
+
+      case 'redirectToPasswordReset':
+        returnData = _this.redirectToPasswordReset;
+        break;
+
+      case 'createSignature':
+        returnData = _this.createSignature;
+        break;
+
+      case 'updateSignature':
+        returnData = _this.updateSignature;
+        break;
+
+      case 'getSignature':
+        returnData = _this.getSignature;
+        break;
+
+      case 'deleteSignature':
+        returnData = _this.deleteSignature;
+        break;
+
+      case 'inviteUser':
+        returnData = _this.inviteUser;
+        break;
+
+      case 'retrieveUsers':
+        returnData = _this.retrieveUsers;
+        break;
+
+      case 'getUserByID':
+        returnData = _this.getUserByID;
+        break;
+
+      case 'updateUser':
+        returnData = _this.updateUser;
+        break;
+
+      case 'removeUser':
+        returnData = _this.removeUser;
+        break;
+
+      case 'resendToken':
+        returnData = _this.resendToken;
+        break;
+
+      case 'confirmUser':
+        returnData = _this.confirmUser;
+        break;
+
+      case 'confirmInvite':
+        returnData = _this.confirmInvite;
+        break;
+      // webhooks
+
+      case 'createWebhook':
+        returnData = _this.createWebhook;
+        break;
+
+      case 'getWebhooks':
+        returnData = _this.getWebhooks;
+        break;
+
+      case 'deleteWebhook':
+        returnData = _this.deleteWebhook;
+        break;
+      // Default
+
+      default:
+        return undefined;
+    }
+
+    console.log('return data:', returnData);
+    return returnData;
+  });
+
+  _defineProperty(this, "createAccount", {
+    method: "POST",
+    path: "accounts",
+    parameters: false
+  });
+
+  _defineProperty(this, "retrieveAccount", {
+    method: "GET",
+    path: "accounts",
+    parameters: false
+  });
+
+  _defineProperty(this, "updateAccount", {
+    method: "UPDATE",
+    path: "accounts",
+    parameters: false
+  });
+
+  _defineProperty(this, "deleteAccount", {
+    method: "DELETE",
+    path: "accounts",
+    parameters: false
+  });
+
+  _defineProperty(this, "getAccountWithAllUsers", {
+    method: "GET",
+    path: "accounts/includes/user",
+    parameters: false
+  });
+
+  _defineProperty(this, "getAccountStats", {
+    method: "GET",
+    path: "accounts/{id}/stats",
+    parameters: true
+  });
+
+  _defineProperty(this, "getRecentEvents", {
+    method: "GET",
+    path: "accounts/{id}/events",
+    parameters: true
+  });
+
+  _defineProperty(this, "getExtensionsList", {
+    method: "GET",
+    path: "accounts/{id}extensions",
+    parameters: true
+  });
+
+  _defineProperty(this, "enableExtension", {
+    method: "PATCH",
+    path: "accounts/{id}extensions",
+    parameters: true
+  });
+
+  _defineProperty(this, "disableExtension", {
+    method: "DELETE",
+    path: "accounts/{id}extensions",
+    parameters: true
+  });
+
+  _defineProperty(this, "createEnvelope", {
+    method: "POST",
+    path: "envelopes",
+    parameters: false
+  });
+
+  _defineProperty(this, "retrieveEnvelope", {
+    method: "GET",
+    path: "envelopes",
+    parameters: false
+  });
+
+  _defineProperty(this, "archiveEnvelope", {
+    method: "DELETE",
+    path: "envelopes",
+    parameters: false
+  });
+
+  _defineProperty(this, "restoreEnvelope", {
+    method: "PATCH",
+    path: "envelopes",
+    parameters: false
+  });
+
+  _defineProperty(this, "redirectToWebApp", {
+    method: "POST",
+    path: "envelopes/redirect",
+    parameters: false
+  });
+
+  _defineProperty(this, "getSignedEnvelopes", {
+    method: "GET",
+    path: "envelopes/signed",
+    parameters: false
+  });
+
+  _defineProperty(this, "getCompletedEnvelopes", {
+    method: "GET",
+    path: "envelopes/completed",
+    parameters: false
+  });
+
+  _defineProperty(this, "getPendingEnvelopes", {
+    method: "GET",
+    path: "envelopes/pending",
+    parameters: false
+  });
+
+  _defineProperty(this, "getDeclinedEnvelopes", {
+    method: "GET",
+    path: "envelopes/declined",
+    parameters: false
+  });
+
+  _defineProperty(this, "getInboxEnvelopes", {
+    method: "GET",
+    path: "envelopes/inbox",
+    parameters: false
+  });
+
+  _defineProperty(this, "getArchivedEnvelopes", {
+    method: "GET",
+    path: "envelopes/archived",
+    parameters: false
+  });
+
+  _defineProperty(this, "getEnvelope", {
+    method: "GET",
+    path: "envelopes/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "permanentlyDeleteEnvelope", {
+    method: "DELETE",
+    path: "envelopes/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "getSignerEnvelope", {
+    method: "GET",
+    path: "envelopes/{id}/signer/{signer_id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "getAuditTrail", {
+    method: "GET",
+    path: "envelopes/{id}/audits",
+    parameters: true
+  });
+
+  _defineProperty(this, "getAttachments", {
+    method: "GET",
+    path: "envelopes/{id}/attachments",
+    parameters: true
+  });
+
+  _defineProperty(this, "createOauthApp", {
+    method: "POST",
+    path: "oauth/applications",
+    parameters: false
+  });
+
+  _defineProperty(this, "getOauthApps", {
+    method: "GET",
+    path: "oauth/applications",
+    parameters: false
+  });
+
+  _defineProperty(this, "getOauthApp", {
+    method: "GET",
+    path: "oauth/applications/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "deleteOauthApp", {
+    method: "DELETE",
+    path: "oauth/applications/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "createAuthCode", {
+    method: "POST",
+    path: "oauth/authorize",
+    parameters: false
+  });
+
+  _defineProperty(this, "retrieveAccessToken", {
+    method: "POST",
+    path: "oauth/token",
+    parameters: false
+  });
+
+  _defineProperty(this, "revokeAccessToken", {
+    method: "POST",
+    path: "oauth/revoke",
+    parameters: false
+  });
+
+  _defineProperty(this, "getTokenInfo", {
+    method: "GET",
+    path: "oauth/token/info",
+    parameters: false
+  });
+
+  _defineProperty(this, "addPaymentDetails", {
+    method: "POST",
+    path: "payments/cards",
+    parameters: false
+  });
+
+  _defineProperty(this, "deletePaymentDetails", {
+    method: "DELETE",
+    path: "payments/cards",
+    parameters: false
+  });
+
+  _defineProperty(this, "setupDirectDebit", {
+    method: "POST",
+    path: "payments/direct_debits",
+    parameters: false
+  });
+
+  _defineProperty(this, "confirmDirectDebit", {
+    method: "PATCH",
+    path: "payments/direct_debits",
+    parameters: false
+  });
+
+  _defineProperty(this, "cancelDirectDebit", {
+    method: "DELETE",
+    path: "payments/direct_debits",
+    parameters: false
+  });
+
+  _defineProperty(this, "getPlans", {
+    method: "GET",
+    path: "payments/plans",
+    parameters: false
+  });
+
+  _defineProperty(this, "changePlan", {
+    method: "GET",
+    path: "payments/plans",
+    parameters: false
+  });
+
+  _defineProperty(this, "paymentCharge", {
+    method: "POST",
+    path: "payments",
+    parameters: false
+  });
+
+  _defineProperty(this, "getInvoices", {
+    method: "GET",
+    path: "payments",
+    parameters: false
+  });
+
+  _defineProperty(this, "getInvoice", {
+    method: "GET",
+    path: "payments/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "ssoLogin", {
+    method: "GET",
+    path: "saml/auth/login",
+    parameters: false
+  });
+
+  _defineProperty(this, "ssoCallback", {
+    method: "POST",
+    path: "saml/auth/callback",
+    parameters: false
+  });
+
+  _defineProperty(this, "createReminder", {
+    method: "POST",
+    path: "signers/{id}/reminders",
+    parameters: true
+  });
+
+  _defineProperty(this, "getReminder", {
+    method: "GET",
+    path: "signers/{id}/reminders",
+    parameters: true
+  });
+
+  _defineProperty(this, "destroyReminder", {
+    method: "DELETE",
+    path: "signers/{id}/reminders",
+    parameters: true
+  });
+
+  _defineProperty(this, "signDocument", {
+    method: "POST",
+    path: "signers/{id}/doumnets/{document_id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "getSignerEnvelopeFromSigners", {
+    method: "GET",
+    path: "signers/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "updateSigner", {
+    method: "GET",
+    path: "signers/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "createTag", {
+    method: "POST",
+    path: "tags",
+    parameters: false
+  });
+
+  _defineProperty(this, "getTags", {
+    method: "GET",
+    path: "tags",
+    parameters: false
+  });
+
+  _defineProperty(this, "updateTag", {
+    method: "PATCH",
+    path: "tags/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "deleteTag", {
+    method: "DELETE",
+    path: "tags/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "getResourcesByTagAndType", {
+    method: "GET",
+    path: "tags/{id}/{resource_type}",
+    parameters: true
+  });
+
+  _defineProperty(this, "createTemplate", {
+    method: "POST",
+    path: "templates",
+    parameters: false
+  });
+
+  _defineProperty(this, "getTemplates", {
+    method: "GET",
+    path: "templates",
+    parameters: false
+  });
+
+  _defineProperty(this, "generateEnvelopeRequest", {
+    method: "POST",
+    path: "templates/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "updateTemplate", {
+    method: "PATCH",
+    path: "templates/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "retrieveTemplate", {
+    method: "POST",
+    path: "templates/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "deleteTemplate", {
+    method: "DELETE",
+    path: "templates/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "uploadFiles", {
+    method: "POST",
+    path: "uploads",
+    parameters: false
+  });
+
+  _defineProperty(this, "archiveFiles", {
+    method: "DELETE",
+    path: "uploads",
+    parameters: false
+  });
+
+  _defineProperty(this, "getFilesByType", {
+    method: "GET",
+    path: "uploads/list/{type}",
+    parameters: true
+  });
+
+  _defineProperty(this, "getFileByID", {
+    method: "GET",
+    path: "uploads/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "uploadCSVFile", {
+    method: "POST",
+    path: "uploads/csv",
+    parameters: false
+  });
+
+  _defineProperty(this, "userLogin", {
+    method: "POST",
+    path: "users/login",
+    parameters: false
+  });
+
+  _defineProperty(this, "userLogout", {
+    method: "DELETE",
+    path: "users/logout",
+    parameters: false
+  });
+
+  _defineProperty(this, "createContact", {
+    method: "POST",
+    path: "users/contacts",
+    parameters: false
+  });
+
+  _defineProperty(this, "getContact", {
+    method: "POST",
+    path: "users/contacts",
+    parameters: false
+  });
+
+  _defineProperty(this, "updateContact", {
+    method: "PATCH",
+    path: "users/contacts/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "deleteContact", {
+    method: "DELETE",
+    path: "users/contacts/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "requestPasswordReset", {
+    method: "POST",
+    path: "users/passwords",
+    parameters: false
+  });
+
+  _defineProperty(this, "resetPassword", {
+    method: "PATCH",
+    path: "users/passwords/update",
+    parameters: false
+  });
+
+  _defineProperty(this, "redirectToPasswordReset", {
+    method: "POST",
+    path: "users/passwords/edit",
+    parameters: false
+  });
+
+  _defineProperty(this, "createSignature", {
+    method: "POST",
+    path: "users/signatures",
+    parameters: false
+  });
+
+  _defineProperty(this, "updateSignature", {
+    method: "PATCH",
+    path: "users/signatures/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "getSignature", {
+    method: "GET",
+    path: "users/signatures/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "deleteSignature", {
+    method: "DELETE",
+    path: "users/signatures/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "inviteUser", {
+    method: "POST",
+    path: "users",
+    parameters: false
+  });
+
+  _defineProperty(this, "retrieveUsers", {
+    method: "GET",
+    path: "users",
+    parameters: false
+  });
+
+  _defineProperty(this, "getUserByID", {
+    method: "GET",
+    path: "users/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "updateUser", {
+    method: "PATCH",
+    path: "users/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "removeUser", {
+    method: "DELETE",
+    path: "users/{id}",
+    parameters: true
+  });
+
+  _defineProperty(this, "resendToken", {
+    method: "POST",
+    path: "users/confirms",
+    parameters: false
+  });
+
+  _defineProperty(this, "confirmUser", {
+    method: "GET",
+    path: "users/{id}/confirms/{token}",
+    parameters: true
+  });
+
+  _defineProperty(this, "confirmInvite", {
+    method: "PATCH",
+    path: "users/{id}/confirms/{token}",
+    parameters: true
+  });
+
+  _defineProperty(this, "createWebhook", {
+    method: "POST",
+    path: "webhooks",
+    parameters: false
+  });
+
+  _defineProperty(this, "getWebhooks", {
+    method: "GET",
+    path: "webhooks",
+    parameters: false
+  });
+
+  _defineProperty(this, "deleteWebhook", {
+    method: "DELETE",
+    path: "webhooks/{id}",
+    parameters: true
+  });
+} // end of class
+);
+
+exports.ESign = ESign;
