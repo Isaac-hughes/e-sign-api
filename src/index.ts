@@ -15,103 +15,6 @@ const ROOT_URL: string = "https://api.e-sign.co.uk/v3/";
 // defaults to sandbox
 let environment: string = SANDBOX_ROOT_URL;
 
-
-// Axios has been installed to facilitate the HTTP requests
-// This package is designed to run off constants rather than many functions
-// This makes the package more efficient, and much quicker to write...
-let makeRequest = (method: any, path: any, headers: any, data: any, parameters: any) => {
-    // Two seprate calls depending on if parameters are defined
-    if(parameters != null){
-        // Function construsts the path from the path and the path parameters
-        let pathAndParameters = getPath(path, parameters)
-        if(data != null){
-            // Axios http call
-            axios({
-                method: method,
-                url: environment + pathAndParameters,
-                headers: headers,
-                data: data,
-                responseType: 'json'
-            }).then(function(response){
-                let responseObject: any = {
-                    json: response.data,
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                }
-                return responseObject
-            }).catch(function(error){
-                console.log(error)
-                return error
-            })
-        }else{
-            // Axios http call
-            axios({
-                method: method,
-                url: environment + pathAndParameters,
-                headers: headers,
-                responseType: 'json'
-            }).then(function(response){
-                let responseObject: any = {
-                    json: response.data,
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                }                
-                return responseObject
-            }).catch(function(error){
-                console.log(error)
-                return error
-            })
-        }
-
-        
-    } else {
-        if(data != null){
-            // Axios http call
-        axios({
-            method: method,
-            url: environment + path,
-            headers: headers,
-            data: data,
-            responseType: 'json'
-          }).then(function(response){
-            let responseObject: any = {
-                json: response.data,
-                status: response.status,
-                statusText: response.statusText,
-                headers: response.headers
-            }
-            return responseObject
-          }).catch(function(error){
-              console.log(error)
-              return error
-          })
-        } else {
-            // Axios http call
-            axios({
-                method: method,
-                url: environment + path,
-                headers: headers,
-                responseType: 'json'
-            }).then(function(response){
-                let responseObject: any = {
-                    json: response.data,
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                }
-                return responseObject
-            }).catch(function(error){
-                console.log(error)
-                return error
-            })
-        }
-        
-    }
-}
-
-
 // This function is the gateway to all functions
 export let esign =  async (apiKey: string, call: string, data: any, sandbox: boolean) => {
 
@@ -131,7 +34,10 @@ export let esign =  async (apiKey: string, call: string, data: any, sandbox: boo
         // get the data for the call
         let callData = await getCallData(call); 
         if(callData == undefined){
-            console.log("The call you passed does not match any defined call:", call)
+            return({
+                message:"The call you passed does not match any defined call",
+                call: call
+            })
         } else {
             let method = callData.method;
             let path = callData.path;
@@ -143,22 +49,130 @@ export let esign =  async (apiKey: string, call: string, data: any, sandbox: boo
                 let parameters = data.parameters;
                 let pathWithParameters = getPath(path, parameters)
                 if(body == {} || body == undefined){
-                    makeRequest(method, pathWithParameters, headers, null, parameters);
+                    await makeRequest(method, pathWithParameters, headers, null, parameters).then(function(response: any){
+                        console.log(response.data)
+                        let responseObject: any = {
+                        json: response.data,
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: response.headers
+                    }
+                    return responseObject
+                    }).catch(error => {
+                        console.log(error)
+                    })
                 } else{
-                    makeRequest(method, pathWithParameters, headers, data, parameters);
+                    await makeRequest(method, pathWithParameters, headers, data, parameters).then(function(response: any){
+                        console.log(response.data)
+                        let responseObject: any = {
+                        json: response.data,
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: response.headers
+                    }
+                    return responseObject
+                    }).catch(error => {
+                        console.log(error)
+                    })
                 }
             } else{
                 if(body == {} || body == undefined){
-                    makeRequest(method, path, headers, null, null);
+                    await makeRequest(method, path, headers, null, null).then(function(response: any){
+                        console.log(response.data)
+                        let responseObject: any = {
+                        json: response.data,
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: response.headers
+                    }
+                    return responseObject
+                    }).catch(error => {
+                        console.log(error)
+                    })
                 } else{
-                    makeRequest(method, path, headers, data, null);
+                    await makeRequest(method, path, headers, data, null).then(function(response: any){
+                        console.log(response.data)
+                        let responseObject: any = {
+                        json: response.data,
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: response.headers
+                    }
+                    return responseObject
+                    }).catch(error => {
+                        console.log(error)
+                    })
                 }
             }
         }
-
     } else{
         console.log("The call you passed does not match any defined call", call)
         return {message: "The call you passed does not match any defined call"}
+    }
+}
+
+
+// Axios has been installed to facilitate the HTTP requests
+// This package is designed to run off constants rather than many functions
+// This makes the package more efficient, and much quicker to write...
+let makeRequest = async (method: any, path: any, headers: any, data: any, parameters: any) => {
+    // Two seprate calls depending on if parameters are defined
+    if(parameters != null){
+        // Function construsts the path from the path and the path parameters
+        let pathAndParameters = getPath(path, parameters)
+        if(data != null){
+            // Axios http call
+            try {
+                await axios({
+                    method: method,
+                    url: environment + pathAndParameters,
+                    headers: headers,
+                    data: data,
+                    responseType: 'json'
+                })
+            } catch (error) {
+                return error
+            }
+        }else{
+            // Axios http call
+            try {
+                await axios({
+                    method: method,
+                    url: environment + pathAndParameters,
+                    headers: headers,
+                    responseType: 'json'
+                })
+            } catch (error) {
+                return error
+            }
+        }        
+    } else {
+        if(data != null){
+            // Axios http call
+            try {
+                await axios({
+                    method: method,
+                    url: environment + path,
+                    headers: headers,
+                    data: data,
+                    responseType: 'json'
+                  })
+            } catch (error) {
+                return error
+            }
+        } else {
+            // Axios http call
+            try {
+                await axios({
+                    method: method,
+                    url: environment + path,
+                    headers: headers,
+                    responseType: 'json'
+                })
+            } catch (error) {
+                return error
+            }   
+        } 
     }
 }
 
@@ -185,13 +199,10 @@ let getPath = (path: any, parameters: any) => {
       }
     return returnPath
   }
-  
 
 // Assign the data fir the http call
 let getCallData = (call: any) =>{
-
     let returnData;
-
     switch (call) {
 
         // Accounts
@@ -498,7 +509,6 @@ let getCallData = (call: any) =>{
         default:
             return undefined;
       }
-      console.log('return data:', returnData)
       return returnData;
 
 }

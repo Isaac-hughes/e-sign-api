@@ -49,100 +49,6 @@ var ROOT_URL = "https://api.e-sign.co.uk/v3/";
 // the environment can either be sandbox or live
 // defaults to sandbox
 var environment = SANDBOX_ROOT_URL;
-// Axios has been installed to facilitate the HTTP requests
-// This package is designed to run off constants rather than many functions
-// This makes the package more efficient, and much quicker to write...
-var makeRequest = function (method, path, headers, data, parameters) {
-    // Two seprate calls depending on if parameters are defined
-    if (parameters != null) {
-        // Function construsts the path from the path and the path parameters
-        var pathAndParameters = getPath(path, parameters);
-        if (data != null) {
-            // Axios http call
-            (0, axios_1.default)({
-                method: method,
-                url: environment + pathAndParameters,
-                headers: headers,
-                data: data,
-                responseType: 'json'
-            }).then(function (response) {
-                var responseObject = {
-                    json: response.data,
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                };
-                return responseObject;
-            }).catch(function (error) {
-                console.log(error);
-                return error;
-            });
-        }
-        else {
-            // Axios http call
-            (0, axios_1.default)({
-                method: method,
-                url: environment + pathAndParameters,
-                headers: headers,
-                responseType: 'json'
-            }).then(function (response) {
-                var responseObject = {
-                    json: response.data,
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                };
-                return responseObject;
-            }).catch(function (error) {
-                console.log(error);
-                return error;
-            });
-        }
-    }
-    else {
-        if (data != null) {
-            // Axios http call
-            (0, axios_1.default)({
-                method: method,
-                url: environment + path,
-                headers: headers,
-                data: data,
-                responseType: 'json'
-            }).then(function (response) {
-                var responseObject = {
-                    json: response.data,
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                };
-                return responseObject;
-            }).catch(function (error) {
-                console.log(error);
-                return error;
-            });
-        }
-        else {
-            // Axios http call
-            (0, axios_1.default)({
-                method: method,
-                url: environment + path,
-                headers: headers,
-                responseType: 'json'
-            }).then(function (response) {
-                var responseObject = {
-                    json: response.data,
-                    status: response.status,
-                    statusText: response.statusText,
-                    headers: response.headers
-                };
-                return responseObject;
-            }).catch(function (error) {
-                console.log(error);
-                return error;
-            });
-        }
-    }
-};
 // This function is the gateway to all functions
 var esign = function (apiKey, call, data, sandbox) { return __awaiter(void 0, void 0, void 0, function () {
     var callData, method, path, headers, body, parameters, pathWithParameters;
@@ -159,47 +65,176 @@ var esign = function (apiKey, call, data, sandbox) { return __awaiter(void 0, vo
                 else {
                     environment = SANDBOX_ROOT_URL;
                 }
-                if (!(call != undefined && call != null && call != "")) return [3 /*break*/, 2];
+                if (!(call != undefined && call != null && call != "")) return [3 /*break*/, 12];
                 return [4 /*yield*/, getCallData(call)];
             case 1:
                 callData = _a.sent();
-                if (callData == undefined) {
-                    console.log("The call you passed does not match any defined call:", call);
-                }
-                else {
-                    method = callData.method;
-                    path = callData.path;
-                    headers = { 'Authorization': "Token ".concat(apiKey) };
-                    body = data.body;
-                    // Makes two differernt calls depending on whether parameters or needed
-                    if (callData.parameters) {
-                        parameters = data.parameters;
-                        pathWithParameters = getPath(path, parameters);
-                        if (body == {} || body == undefined) {
-                            makeRequest(method, pathWithParameters, headers, null, parameters);
-                        }
-                        else {
-                            makeRequest(method, pathWithParameters, headers, data, parameters);
-                        }
-                    }
-                    else {
-                        if (body == {} || body == undefined) {
-                            makeRequest(method, path, headers, null, null);
-                        }
-                        else {
-                            makeRequest(method, path, headers, data, null);
-                        }
-                    }
-                }
-                return [3 /*break*/, 3];
+                if (!(callData == undefined)) return [3 /*break*/, 2];
+                return [2 /*return*/, ({
+                        message: "The call you passed does not match any defined call",
+                        call: call
+                    })];
             case 2:
+                method = callData.method;
+                path = callData.path;
+                headers = { 'Authorization': "Token ".concat(apiKey) };
+                body = data.body;
+                if (!callData.parameters) return [3 /*break*/, 7];
+                parameters = data.parameters;
+                pathWithParameters = getPath(path, parameters);
+                if (!(body == {} || body == undefined)) return [3 /*break*/, 4];
+                return [4 /*yield*/, makeRequest(method, pathWithParameters, headers, null, parameters).then(function (response) {
+                        console.log(response.data);
+                        var responseObject = {
+                            json: response.data,
+                            status: response.status,
+                            statusText: response.statusText,
+                            headers: response.headers
+                        };
+                        return responseObject;
+                    }).catch(function (error) {
+                        console.log(error);
+                    })];
+            case 3:
+                _a.sent();
+                return [3 /*break*/, 6];
+            case 4: return [4 /*yield*/, makeRequest(method, pathWithParameters, headers, data, parameters).then(function (response) {
+                    console.log(response.data);
+                    var responseObject = {
+                        json: response.data,
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: response.headers
+                    };
+                    return responseObject;
+                }).catch(function (error) {
+                    console.log(error);
+                })];
+            case 5:
+                _a.sent();
+                _a.label = 6;
+            case 6: return [3 /*break*/, 11];
+            case 7:
+                if (!(body == {} || body == undefined)) return [3 /*break*/, 9];
+                return [4 /*yield*/, makeRequest(method, path, headers, null, null).then(function (response) {
+                        console.log(response.data);
+                        var responseObject = {
+                            json: response.data,
+                            status: response.status,
+                            statusText: response.statusText,
+                            headers: response.headers
+                        };
+                        return responseObject;
+                    }).catch(function (error) {
+                        console.log(error);
+                    })];
+            case 8:
+                _a.sent();
+                return [3 /*break*/, 11];
+            case 9: return [4 /*yield*/, makeRequest(method, path, headers, data, null).then(function (response) {
+                    console.log(response.data);
+                    var responseObject = {
+                        json: response.data,
+                        status: response.status,
+                        statusText: response.statusText,
+                        headers: response.headers
+                    };
+                    return responseObject;
+                }).catch(function (error) {
+                    console.log(error);
+                })];
+            case 10:
+                _a.sent();
+                _a.label = 11;
+            case 11: return [3 /*break*/, 13];
+            case 12:
                 console.log("The call you passed does not match any defined call", call);
                 return [2 /*return*/, { message: "The call you passed does not match any defined call" }];
-            case 3: return [2 /*return*/];
+            case 13: return [2 /*return*/];
         }
     });
 }); };
 exports.esign = esign;
+// Axios has been installed to facilitate the HTTP requests
+// This package is designed to run off constants rather than many functions
+// This makes the package more efficient, and much quicker to write...
+var makeRequest = function (method, path, headers, data, parameters) { return __awaiter(void 0, void 0, void 0, function () {
+    var pathAndParameters, error_1, error_2, error_3, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                if (!(parameters != null)) return [3 /*break*/, 9];
+                pathAndParameters = getPath(path, parameters);
+                if (!(data != null)) return [3 /*break*/, 5];
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, (0, axios_1.default)({
+                        method: method,
+                        url: environment + pathAndParameters,
+                        headers: headers,
+                        data: data,
+                        responseType: 'json'
+                    })];
+            case 2:
+                _a.sent();
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _a.sent();
+                return [2 /*return*/, error_1];
+            case 4: return [3 /*break*/, 8];
+            case 5:
+                _a.trys.push([5, 7, , 8]);
+                return [4 /*yield*/, (0, axios_1.default)({
+                        method: method,
+                        url: environment + pathAndParameters,
+                        headers: headers,
+                        responseType: 'json'
+                    })];
+            case 6:
+                _a.sent();
+                return [3 /*break*/, 8];
+            case 7:
+                error_2 = _a.sent();
+                return [2 /*return*/, error_2];
+            case 8: return [3 /*break*/, 17];
+            case 9:
+                if (!(data != null)) return [3 /*break*/, 14];
+                _a.label = 10;
+            case 10:
+                _a.trys.push([10, 12, , 13]);
+                return [4 /*yield*/, (0, axios_1.default)({
+                        method: method,
+                        url: environment + path,
+                        headers: headers,
+                        data: data,
+                        responseType: 'json'
+                    })];
+            case 11:
+                _a.sent();
+                return [3 /*break*/, 13];
+            case 12:
+                error_3 = _a.sent();
+                return [2 /*return*/, error_3];
+            case 13: return [3 /*break*/, 17];
+            case 14:
+                _a.trys.push([14, 16, , 17]);
+                return [4 /*yield*/, (0, axios_1.default)({
+                        method: method,
+                        url: environment + path,
+                        headers: headers,
+                        responseType: 'json'
+                    })];
+            case 15:
+                _a.sent();
+                return [3 /*break*/, 17];
+            case 16:
+                error_4 = _a.sent();
+                return [2 /*return*/, error_4];
+            case 17: return [2 /*return*/];
+        }
+    });
+}); };
 // This function takes the path and parameters and returns the completed path for the request
 var getPath = function (path, parameters) {
     // this function takes the path from the call data object and a parameters object
@@ -520,7 +555,6 @@ var getCallData = function (call) {
         default:
             return undefined;
     }
-    console.log('return data:', returnData);
     return returnData;
 };
 // ==============
