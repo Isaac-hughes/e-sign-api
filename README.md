@@ -5,7 +5,7 @@ Created By Isaac Hughes
 
 Github repo [click here](https://github.com/Isaac-hughes/e-sign-api)
 
-# Stable Version ~ 1.3.3
+# Stable Version ~ 1.3.4
 
 ## Table of Contents
 
