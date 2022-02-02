@@ -209,7 +209,7 @@ Please view the swagger to see what data should be passed with each call and the
 ## Example
 
 ```js
-const eSignNPM = require('e-sign-api')
+import { esign } from "./dist/index.js";
 
 let data = {
     parameters: {
@@ -217,7 +217,7 @@ let data = {
     }
 }
 
-let response = eSignNPM('demo12345678', 'retrieveAccount', data, true)
+let response = await esign('demo12345678', 'retrieveAccount', data, true)
 ```
 
 resonse data (collapsed objects)
