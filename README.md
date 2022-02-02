@@ -5,7 +5,7 @@ Created By Isaac Hughes
 
 Github repo [click here](https://github.com/Isaac-hughes/e-sign-api)
 
-# Stable Version ~ 1.3.2
+# Stable Version ~ 1.3.3
 
 ## Table of Contents
 
@@ -53,7 +53,7 @@ let data = {
     ...
 }
 
-eSignNPM('apikey', 'call', data, true)
+esign('apikey', 'call', data, true)
 ```
 If the route takes parameters, these should be passed as part of the data object
 If the call takes a json body, this too should be passed in the data object
@@ -209,7 +209,7 @@ Please view the swagger to see what data should be passed with each call and the
 ## Example
 
 ```js
-import { esign } from "./dist/index.js";
+import { esign } from 'e-sign-api';
 
 let data = {
     parameters: {
