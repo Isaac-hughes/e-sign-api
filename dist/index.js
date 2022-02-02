@@ -51,7 +51,7 @@ var ROOT_URL = "https://api.e-sign.co.uk/v3/";
 var environment = SANDBOX_ROOT_URL;
 // This function is the gateway to all functions
 var esign = function (apiKey, call, data, sandbox) { return __awaiter(void 0, void 0, void 0, function () {
-    var callData, method, path, headers, body, parameters, pathWithParameters;
+    var callData, method, path, headers, body, parameters, pathWithParameters, response, responseObject, response, responseObject, response, responseObject, response, responseObject;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -70,6 +70,7 @@ var esign = function (apiKey, call, data, sandbox) { return __awaiter(void 0, vo
             case 1:
                 callData = _a.sent();
                 if (!(callData == undefined)) return [3 /*break*/, 2];
+                console.log('call failed, call data undefined');
                 return [2 /*return*/, ({
                         message: "The call you passed does not match any defined call",
                         call: call
@@ -83,69 +84,49 @@ var esign = function (apiKey, call, data, sandbox) { return __awaiter(void 0, vo
                 parameters = data.parameters;
                 pathWithParameters = getPath(path, parameters);
                 if (!(body == {} || body == undefined)) return [3 /*break*/, 4];
-                return [4 /*yield*/, makeRequest(method, pathWithParameters, headers, null, parameters).then(function (response) {
-                        console.log(response.data);
-                        var responseObject = {
-                            json: response.data,
-                            status: response.status,
-                            statusText: response.statusText,
-                            headers: response.headers
-                        };
-                        return responseObject;
-                    }).catch(function (error) {
-                        console.log(error);
-                    })];
+                return [4 /*yield*/, makeRequest(method, pathWithParameters, headers, null, parameters)];
             case 3:
-                _a.sent();
-                return [3 /*break*/, 6];
-            case 4: return [4 /*yield*/, makeRequest(method, pathWithParameters, headers, data, parameters).then(function (response) {
-                    console.log(response.data);
-                    var responseObject = {
-                        json: response.data,
-                        status: response.status,
-                        statusText: response.statusText,
-                        headers: response.headers
-                    };
-                    return responseObject;
-                }).catch(function (error) {
-                    console.log(error);
-                })];
+                response = _a.sent();
+                responseObject = {
+                    json: response.data,
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers
+                };
+                return [2 /*return*/, responseObject];
+            case 4: return [4 /*yield*/, makeRequest(method, pathWithParameters, headers, data, parameters)];
             case 5:
-                _a.sent();
-                _a.label = 6;
+                response = _a.sent();
+                responseObject = {
+                    json: response.data,
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers
+                };
+                return [2 /*return*/, responseObject];
             case 6: return [3 /*break*/, 11];
             case 7:
                 if (!(body == {} || body == undefined)) return [3 /*break*/, 9];
-                return [4 /*yield*/, makeRequest(method, path, headers, null, null).then(function (response) {
-                        console.log(response.data);
-                        var responseObject = {
-                            json: response.data,
-                            status: response.status,
-                            statusText: response.statusText,
-                            headers: response.headers
-                        };
-                        return responseObject;
-                    }).catch(function (error) {
-                        console.log(error);
-                    })];
+                return [4 /*yield*/, makeRequest(method, path, headers, null, null)];
             case 8:
-                _a.sent();
-                return [3 /*break*/, 11];
-            case 9: return [4 /*yield*/, makeRequest(method, path, headers, data, null).then(function (response) {
-                    console.log(response.data);
-                    var responseObject = {
-                        json: response.data,
-                        status: response.status,
-                        statusText: response.statusText,
-                        headers: response.headers
-                    };
-                    return responseObject;
-                }).catch(function (error) {
-                    console.log(error);
-                })];
+                response = _a.sent();
+                responseObject = {
+                    json: response.data,
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers
+                };
+                return [2 /*return*/, responseObject];
+            case 9: return [4 /*yield*/, makeRequest(method, path, headers, data, null)];
             case 10:
-                _a.sent();
-                _a.label = 11;
+                response = _a.sent();
+                responseObject = {
+                    json: response.data,
+                    status: response.status,
+                    statusText: response.statusText,
+                    headers: response.headers
+                };
+                return [2 /*return*/, responseObject];
             case 11: return [3 /*break*/, 13];
             case 12:
                 console.log("The call you passed does not match any defined call", call);
@@ -159,7 +140,7 @@ exports.esign = esign;
 // This package is designed to run off constants rather than many functions
 // This makes the package more efficient, and much quicker to write...
 var makeRequest = function (method, path, headers, data, parameters) { return __awaiter(void 0, void 0, void 0, function () {
-    var pathAndParameters, error_1, error_2, error_3, error_4;
+    var pathAndParameters, axiosData, error_1, axiosData, error_2, axiosData, error_3, axiosData, error_4;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -171,14 +152,13 @@ var makeRequest = function (method, path, headers, data, parameters) { return __
                 _a.trys.push([1, 3, , 4]);
                 return [4 /*yield*/, (0, axios_1.default)({
                         method: method,
-                        url: environment + pathAndParameters,
+                        url: environment + path,
                         headers: headers,
-                        data: data,
                         responseType: 'json'
                     })];
             case 2:
-                _a.sent();
-                return [3 /*break*/, 4];
+                axiosData = _a.sent();
+                return [2 /*return*/, axiosData];
             case 3:
                 error_1 = _a.sent();
                 return [2 /*return*/, error_1];
@@ -187,13 +167,13 @@ var makeRequest = function (method, path, headers, data, parameters) { return __
                 _a.trys.push([5, 7, , 8]);
                 return [4 /*yield*/, (0, axios_1.default)({
                         method: method,
-                        url: environment + pathAndParameters,
+                        url: environment + path,
                         headers: headers,
                         responseType: 'json'
                     })];
             case 6:
-                _a.sent();
-                return [3 /*break*/, 8];
+                axiosData = _a.sent();
+                return [2 /*return*/, axiosData];
             case 7:
                 error_2 = _a.sent();
                 return [2 /*return*/, error_2];
@@ -207,12 +187,11 @@ var makeRequest = function (method, path, headers, data, parameters) { return __
                         method: method,
                         url: environment + path,
                         headers: headers,
-                        data: data,
                         responseType: 'json'
                     })];
             case 11:
-                _a.sent();
-                return [3 /*break*/, 13];
+                axiosData = _a.sent();
+                return [2 /*return*/, axiosData];
             case 12:
                 error_3 = _a.sent();
                 return [2 /*return*/, error_3];
@@ -226,8 +205,8 @@ var makeRequest = function (method, path, headers, data, parameters) { return __
                         responseType: 'json'
                     })];
             case 15:
-                _a.sent();
-                return [3 /*break*/, 17];
+                axiosData = _a.sent();
+                return [2 /*return*/, axiosData];
             case 16:
                 error_4 = _a.sent();
                 return [2 /*return*/, error_4];

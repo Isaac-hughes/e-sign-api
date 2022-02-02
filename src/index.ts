@@ -17,7 +17,6 @@ let environment: string = SANDBOX_ROOT_URL;
 
 // This function is the gateway to all functions
 export let esign =  async (apiKey: string, call: string, data: any, sandbox: boolean) => {
-
     // set the environment based on a boolean balue for sandbox
     if(sandbox){
         environment = SANDBOX_ROOT_URL;
@@ -34,6 +33,7 @@ export let esign =  async (apiKey: string, call: string, data: any, sandbox: boo
         // get the data for the call
         let callData = await getCallData(call); 
         if(callData == undefined){
+            console.log('call failed, call data undefined')
             return({
                 message:"The call you passed does not match any defined call",
                 call: call
@@ -49,59 +49,43 @@ export let esign =  async (apiKey: string, call: string, data: any, sandbox: boo
                 let parameters = data.parameters;
                 let pathWithParameters = getPath(path, parameters)
                 if(body == {} || body == undefined){
-                    await makeRequest(method, pathWithParameters, headers, null, parameters).then(function(response: any){
-                        console.log(response.data)
-                        let responseObject: any = {
+                    let response: any = await makeRequest(method, pathWithParameters, headers, null, parameters)
+                    let responseObject: any = {
                         json: response.data,
                         status: response.status,
                         statusText: response.statusText,
                         headers: response.headers
                     }
                     return responseObject
-                    }).catch(error => {
-                        console.log(error)
-                    })
                 } else{
-                    await makeRequest(method, pathWithParameters, headers, data, parameters).then(function(response: any){
-                        console.log(response.data)
-                        let responseObject: any = {
+                    let response: any = await makeRequest(method, pathWithParameters, headers, data, parameters)
+                    let responseObject: any = {
                         json: response.data,
                         status: response.status,
                         statusText: response.statusText,
                         headers: response.headers
                     }
                     return responseObject
-                    }).catch(error => {
-                        console.log(error)
-                    })
                 }
             } else{
                 if(body == {} || body == undefined){
-                    await makeRequest(method, path, headers, null, null).then(function(response: any){
-                        console.log(response.data)
-                        let responseObject: any = {
+                    let response: any = await makeRequest(method, path, headers, null, null)
+                    let responseObject: any = {
                         json: response.data,
                         status: response.status,
                         statusText: response.statusText,
                         headers: response.headers
                     }
                     return responseObject
-                    }).catch(error => {
-                        console.log(error)
-                    })
                 } else{
-                    await makeRequest(method, path, headers, data, null).then(function(response: any){
-                        console.log(response.data)
-                        let responseObject: any = {
+                    let response: any = await makeRequest(method, path, headers, data, null)
+                    let responseObject: any = {
                         json: response.data,
                         status: response.status,
                         statusText: response.statusText,
                         headers: response.headers
                     }
                     return responseObject
-                    }).catch(error => {
-                        console.log(error)
-                    })
                 }
             }
         }
@@ -123,25 +107,26 @@ let makeRequest = async (method: any, path: any, headers: any, data: any, parame
         if(data != null){
             // Axios http call
             try {
-                await axios({
+                let axiosData: any = await axios({
                     method: method,
-                    url: environment + pathAndParameters,
+                    url: environment + path,
                     headers: headers,
-                    data: data,
                     responseType: 'json'
                 })
+                return axiosData
             } catch (error) {
                 return error
             }
         }else{
             // Axios http call
             try {
-                await axios({
+                let axiosData: any = await axios({
                     method: method,
-                    url: environment + pathAndParameters,
+                    url: environment + path,
                     headers: headers,
                     responseType: 'json'
                 })
+                return axiosData
             } catch (error) {
                 return error
             }
@@ -150,25 +135,26 @@ let makeRequest = async (method: any, path: any, headers: any, data: any, parame
         if(data != null){
             // Axios http call
             try {
-                await axios({
+                let axiosData: any = await axios({
                     method: method,
                     url: environment + path,
                     headers: headers,
-                    data: data,
                     responseType: 'json'
-                  })
+                })
+                return axiosData
             } catch (error) {
                 return error
             }
         } else {
             // Axios http call
             try {
-                await axios({
+                let axiosData: any = await axios({
                     method: method,
                     url: environment + path,
                     headers: headers,
                     responseType: 'json'
                 })
+                return axiosData
             } catch (error) {
                 return error
             }   
