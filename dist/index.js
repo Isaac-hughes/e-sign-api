@@ -1,4 +1,4 @@
-// This NPM package was created by Isaac Hughes
+// This NPM package was created by Isaac Hughes For E-Sign UK
 // https://www.linkedin.com/in/isaac-hughes-software-developer/
 // Github Repo
 // https://github.com/Isaac-hughes/e-sign-api

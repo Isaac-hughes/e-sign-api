@@ -5,6 +5,8 @@ Created By Isaac Hughes
 
 Github repo [click here](https://github.com/Isaac-hughes/e-sign-api)
 
+# Stable Version ~ 1.3.1
+
 ## Table of Contents
 
  - [Feautures](#features)
@@ -35,7 +37,7 @@ $ npm install e-sign-api
 To access the functionality, import the function in the following format
 
 ```js
-const eSignNPM = require('e-sign-api');
+import { esign } from 'e-sign-api';
 ```
 
 ## Usage
