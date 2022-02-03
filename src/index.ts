@@ -527,10 +527,10 @@ let deleteAccount: any = {
     path : "accounts",
     parameters: false
 }
-// GET Account With All Users 'accounts/includes/user'
+// GET Account With All Users 'accounts/includes/users'
 let getAccountWithAllUsers: any = {
     method: "GET",
-    path: "accounts/includes/user",
+    path: "accounts/includes/users",
     parameters: false
 }
 // GET Account Stats 'accounts/{id}/stats'
@@ -542,13 +542,13 @@ let getAccountStats: any = {
 // GET Recent events 'accounts/{id}/events'
 let getRecentEvents: any = {
     method : "GET",
-    path : "accounts/{id}/events",
+    path : "accounts/events",
     parameters: true
 }
 // GET List Extensions'accounts/{id}extensions'
 let getExtensionsList: any = {
     method : "GET",
-    path : "accounts/{id}extensions",
+    path : "accounts/{id}/extensions",
     parameters: true
 }
 // PATCH Enable Extension 'accounts/{id}/extensions'

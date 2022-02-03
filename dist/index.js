@@ -563,10 +563,10 @@ var deleteAccount = {
     path: "accounts",
     parameters: false
 };
-// GET Account With All Users 'accounts/includes/user'
+// GET Account With All Users 'accounts/includes/users'
 var getAccountWithAllUsers = {
     method: "GET",
-    path: "accounts/includes/user",
+    path: "accounts/includes/users",
     parameters: false
 };
 // GET Account Stats 'accounts/{id}/stats'
@@ -578,13 +578,13 @@ var getAccountStats = {
 // GET Recent events 'accounts/{id}/events'
 var getRecentEvents = {
     method: "GET",
-    path: "accounts/{id}/events",
+    path: "accounts/events",
     parameters: true
 };
 // GET List Extensions'accounts/{id}extensions'
 var getExtensionsList = {
     method: "GET",
-    path: "accounts/{id}extensions",
+    path: "accounts/{id}/extensions",
     parameters: true
 };
 // PATCH Enable Extension 'accounts/{id}/extensions'
