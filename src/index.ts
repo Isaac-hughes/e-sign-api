@@ -251,9 +251,6 @@ let getCallData = (call: any) =>{
         case 'getDeclinedEnvelopes':
             returnData = getDeclinedEnvelopes;
             break;
-        case 'getInboxEnvelopes':
-            returnData = getInboxEnvelopes;
-            break;
         case 'getArchivedEnvelopes':
             returnData = getArchivedEnvelopes;
             break;
@@ -517,7 +514,7 @@ let retrieveAccount: any = {
 }
 // PATCH Update Account 'accounts'
 let updateAccount: any = {
-    method : "UPDATE",
+    method : "PATCH",
     path : "accounts",
     parameters: false
 }
@@ -533,13 +530,13 @@ let getAccountWithAllUsers: any = {
     path: "accounts/includes/users",
     parameters: false
 }
-// GET Account Stats 'accounts/{id}/stats'
+// GET Account Stats 'accounts/stats'
 let getAccountStats: any = {
     method : "GET",
-    path : "accounts/{id}/stats",
+    path : "accounts/stats",
     parameters: true
 }
-// GET Recent events 'accounts/{id}/events'
+// GET Recent events 'accounts/events'
 let getRecentEvents: any = {
     method : "GET",
     path : "accounts/events",
@@ -619,12 +616,6 @@ let getPendingEnvelopes: any = {
 let getDeclinedEnvelopes: any = {
     method : "GET",
     path : "envelopes/declined",
-    parameters: false
-}
-// GET Retrive inbox envelopes 'envelopes/inbox'
-let getInboxEnvelopes: any = {
-    method : "GET",
-    path : "envelopes/inbox",
     parameters: false
 }
 // GET Retrive achived envelopes 'envelopes/archived'
@@ -975,7 +966,7 @@ let createContact: any = {
 }
 // GET get contacts 'users/contacts'
 let getContact: any = {
-    method : "POST",
+    method : "GET",
     path : "users/contacts",
     parameters: false
 }
@@ -1015,23 +1006,23 @@ let createSignature: any = {
     path : "users/signatures",
     parameters: false
 }
-// PATCH update signature 'users/signatures/{id}'
+// PATCH update signature 'users/signatures'
 let updateSignature: any = {
     method : "PATCH",
-    path : "users/signatures/{id}",
-    parameters: true
+    path : "users/signatures",
+    parameters: false
 }
-// GET get signature 'users/signatures/{id}'
+// GET get signature 'users/signatures'
 let getSignature: any = {
     method : "GET",
-    path : "users/signatures/{id}",
-    parameters: true
+    path : "users/signatures",
+    parameters: false
 }
-// DELETE delete signature 'users/signatures/{id}'
+// DELETE delete signature 'users/signatures'
 let deleteSignature: any = {
     method : "DELETE",
-    path : "users/signatures/{id}",
-    parameters: true
+    path : "users/signatures",
+    parameters: false
 }
 // POST invite user 'users'
 let inviteUser: any = {
