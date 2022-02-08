@@ -302,9 +302,6 @@ var getCallData = function (call) {
         case 'getDeclinedEnvelopes':
             returnData = getDeclinedEnvelopes;
             break;
-        case 'getInboxEnvelopes':
-            returnData = getInboxEnvelopes;
-            break;
         case 'getArchivedEnvelopes':
             returnData = getArchivedEnvelopes;
             break;
@@ -553,7 +550,7 @@ var retrieveAccount = {
 };
 // PATCH Update Account 'accounts'
 var updateAccount = {
-    method: "UPDATE",
+    method: "PATCH",
     path: "accounts",
     parameters: false
 };
@@ -569,13 +566,13 @@ var getAccountWithAllUsers = {
     path: "accounts/includes/users",
     parameters: false
 };
-// GET Account Stats 'accounts/{id}/stats'
+// GET Account Stats 'accounts/stats'
 var getAccountStats = {
     method: "GET",
-    path: "accounts/{id}/stats",
+    path: "accounts/stats",
     parameters: true
 };
-// GET Recent events 'accounts/{id}/events'
+// GET Recent events 'accounts/events'
 var getRecentEvents = {
     method: "GET",
     path: "accounts/events",
@@ -654,12 +651,6 @@ var getPendingEnvelopes = {
 var getDeclinedEnvelopes = {
     method: "GET",
     path: "envelopes/declined",
-    parameters: false
-};
-// GET Retrive inbox envelopes 'envelopes/inbox'
-var getInboxEnvelopes = {
-    method: "GET",
-    path: "envelopes/inbox",
     parameters: false
 };
 // GET Retrive achived envelopes 'envelopes/archived'
@@ -993,7 +984,7 @@ var createContact = {
 };
 // GET get contacts 'users/contacts'
 var getContact = {
-    method: "POST",
+    method: "GET",
     path: "users/contacts",
     parameters: false
 };
@@ -1033,23 +1024,23 @@ var createSignature = {
     path: "users/signatures",
     parameters: false
 };
-// PATCH update signature 'users/signatures/{id}'
+// PATCH update signature 'users/signatures'
 var updateSignature = {
     method: "PATCH",
-    path: "users/signatures/{id}",
-    parameters: true
+    path: "users/signatures",
+    parameters: false
 };
-// GET get signature 'users/signatures/{id}'
+// GET get signature 'users/signatures'
 var getSignature = {
     method: "GET",
-    path: "users/signatures/{id}",
-    parameters: true
+    path: "users/signatures",
+    parameters: false
 };
-// DELETE delete signature 'users/signatures/{id}'
+// DELETE delete signature 'users/signatures'
 var deleteSignature = {
     method: "DELETE",
-    path: "users/signatures/{id}",
-    parameters: true
+    path: "users/signatures",
+    parameters: false
 };
 // POST invite user 'users'
 var inviteUser = {
